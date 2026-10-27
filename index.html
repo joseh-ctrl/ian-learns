@@ -246,6 +246,17 @@ h1.title{margin:0;font-size:clamp(2rem,9vw,3.4rem);line-height:1.05;
 .band.big span{width:clamp(66px,20vw,110px);height:auto;aspect-ratio:auto;display:flex;flex-direction:column;align-items:center;animation:bounce 1.6s ease-in-out infinite}
 .band.big small{color:#fff;font-weight:700;font-size:clamp(.85rem,3.6vw,1.05rem)}
 .band svg{width:100%;height:auto;display:block}
+/* garage */
+.car-stage{width:100%;max-width:560px;overflow:hidden;border-radius:24px;padding:6px 0;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.7) 0 26px,transparent 26px 54px) 0 88%/100% 4px no-repeat,linear-gradient(#4a4f5c,#2b2e37)}
+.car-big{width:min(88%,420px);margin:0 auto}
+.car-big svg,.sw-car svg,.room-car svg,.walker-car svg{width:100%;height:auto;display:block}
+.car-big.zoom{animation:zoom 1.9s cubic-bezier(.5,0,.5,1)}
+@keyframes zoom{0%{transform:translateX(0)}12%{transform:translateX(-6%) rotate(1deg)}45%{transform:translateX(130%)}46%{transform:translateX(-130%)}100%{transform:translateX(0)}}
+.sw-car{width:96px;display:block}
+.hitem.car .room-car{width:24cqw}
+.hitem.car.vroom .room-car{animation:hop .5s}
+.walker{width:clamp(70px,19vw,96px)}
 /* dressing room */
 .closet{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:640px}
 .uni.preview{width:clamp(120px,34vw,180px);cursor:default}
@@ -296,7 +307,7 @@ h1.title{margin:0;font-size:clamp(2rem,9vw,3.4rem);line-height:1.05;
 .chest-tap{color:#fff;font-weight:700;font-size:1.15rem;animation:bounce 1.2s infinite}
 .prize{background:#fff;border-radius:24px;padding:12px 22px;display:flex;flex-direction:column;align-items:center;gap:4px;
   box-shadow:0 0 0 6px rgba(255,211,77,.5);animation:prizePop .55s cubic-bezier(.3,1.6,.5,1)}
-.prize b{font-size:1.3rem}.prize .sw-svg{width:70px;height:78px}.prize .sw-ico{font-size:3rem;line-height:60px;height:60px}
+.prize .sw-car{width:150px}.prize b{font-size:1.3rem}.prize .sw-svg{width:70px;height:78px}.prize .sw-ico{font-size:3rem;line-height:60px;height:60px}
 .prize .sw{width:58px;height:58px}
 .prize .gemrow{display:flex;gap:4px}.prize .gemrow svg{width:46px;height:46px}
 @keyframes prizePop{from{transform:scale(.2);opacity:0}}
@@ -339,7 +350,7 @@ h1.title{margin:0;font-size:clamp(2rem,9vw,3.4rem);line-height:1.05;
 .hsw{width:52px;height:40px;border-radius:12px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.08);display:block}
 .hsw.rugsw{border-radius:50%;height:30px;margin:5px 0}
 .hsw-e{font-size:2.4rem;line-height:46px;height:46px}
-.place.pets-tile{grid-column:1/-1;background:linear-gradient(160deg,#fff,#fff4e6);outline:4px solid #ffd09a}
+.place.pets-tile{background:linear-gradient(160deg,#fff,#fff4e6);outline:4px solid #ffd09a}
 /* grown-up page */
 .parent{width:100%;max-width:640px;display:flex;flex-direction:column;gap:12px;color:var(--ink)}
 .parent h2{color:#fff;margin:0;text-align:center}
@@ -537,6 +548,18 @@ const sfx = {
   tada:  () => tone([523, 659, 784, 1047], .13),
   sparkle: () => tone([1319, 1760, 2093, 2637], .07),
   knock: () => tone([200, 150], .09, 'square'),
+  vroom: (len = 1.5) => { // an engine revving up and zooming away
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const o = ac.createOscillator(), f = ac.createBiquadFilter(), g = ac.createGain(), t = ac.currentTime;
+      o.type = 'sawtooth'; f.type = 'lowpass'; f.frequency.value = 900;
+      o.frequency.setValueAtTime(70, t); o.frequency.exponentialRampToValueAtTime(140, t + len * .25);
+      o.frequency.exponentialRampToValueAtTime(110, t + len * .35); o.frequency.exponentialRampToValueAtTime(260, t + len * .8);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.18, t + .08); g.gain.exponentialRampToValueAtTime(.0001, t + len);
+      o.connect(f).connect(g).connect(ac.destination); o.start(t); o.stop(t + len);
+    } catch(e){}
+  },
+  vroomShort: () => sfx.vroom(.6),
   cheer: () => { // a short crowd cheer made from filtered noise
     try {
       ac = ac || new (window.AudioContext || window.webkitAudioContext)();
@@ -1390,6 +1413,7 @@ function mapScreen(){
       <button class="place open" id="garden"><span class="ico">🔧</span><b>Number Garage</b>
         <small>Math · Level ${S.math.stage + 1}</small><span class="bar"><i style="width:${mathPct()}%"></i></span></button>
       <button class="place open" id="closetTile"><span class="ico">👕</span><b>Style Shop</b><small>Spend your 💎</small></button>
+      <button class="place open" id="carTile"><span class="ico">🏎️</span><b>My Race Car</b><small>Build & paint it</small></button>
       <button class="place open adventure" id="advTile"><span class="ico">🗺️</span><b>Adventure</b><small>${storyTileText()}</small></button>
       <button class="place open pets-tile" id="petsTile"><span class="ico">🐾</span><b>Pet Friends</b><small>${(S.pets || []).length} of ${PETS.length} found</small></button>
     </div>`;
@@ -1398,6 +1422,7 @@ function mapScreen(){
   $('#tower').onclick = () => { sfx.pop(); balloonGame(); };
   $('#garden').onclick = () => { sfx.pop(); gardenScreen(); say('Welcome to the Number Garage! Pick a game!'); };
   $('#advTile').onclick = () => { sfx.pop(); worldScreen(); };
+  $('#carTile').onclick = () => { sfx.vroomShort(); garageScreen(); say('Welcome to your garage! Make your race car awesome!'); };
   $('#closetTile').onclick = () => { sfx.pop(); closetScreen('hairStyle'); say('Welcome to the style shop! Pick something to wear!'); };
   bindLocked();
   const u = screen.querySelector('.hitem.me .me-in');
@@ -1406,6 +1431,8 @@ function mapScreen(){
     const bb = screen.querySelector('.room-bubble'); bb.style.animation = 'none'; void bb.offsetWidth; bb.style.animation = '';
     say('Hi Ian! You look awesome! Where do you want to play?');
   };
+  const cr = screen.querySelector('.hitem.car');
+  cr.onclick = () => { cr.classList.remove('vroom'); void cr.offsetWidth; cr.classList.add('vroom'); sfx.vroomShort(); say('Vroom vroom!'); };
   $('#decoBtn').onclick = () => { sfx.pop(); houseScreen(); say('Decorate your room! Buy new things and drag them around!'); };
 }
 function bindLocked(){
@@ -1965,7 +1992,7 @@ const CHEST_SVG = `<svg viewBox="0 0 120 104">
   <path class="crack" d="M58 70l3 6-3 6 3 8" stroke="#3a1d08" stroke-width="2.5" fill="none" stroke-linecap="round"/>
 </svg>`;
 function rollPrize(){
-  const free = ITEMS.filter(it => (it.cost > 0 || it.chest) && !S.owned.includes(it.id));
+  const free = [...ITEMS, ...CAR_PARTS].filter(it => (it.cost > 0 || it.chest) && !S.owned.includes(it.id));
   const secret = free.filter(it => it.chest);
   if (secret.length && Math.random() < .2) return { item: pick(secret) };
   if (free.length && Math.random() < .5) return { item: pick(free) };
@@ -1995,7 +2022,8 @@ function offerChest(chance, after){
     if (p.item){
       S.owned.push(p.item.id); save();
       if (p.item.chest) setTimeout(() => sfx.sparkle(), 300);
-      box.innerHTML = `${itemSwatch(p.item)}<b>You found ${esc(p.item.name)}!</b><div class="row"><button class="soft-btn" id="tryOn">👕 Try it on</button>${close}</div>`;
+      const isPart = !!part(p.item.id);
+      box.innerHTML = `${isPart ? partSwatch(p.item) : itemSwatch(p.item)}<b>You found ${esc(p.item.name)}!</b><div class="row"><button class="soft-btn" id="tryOn">${isPart ? '🏎️ Put it on' : '👕 Try it on'}</button>${close}</div>`;
       say(`You found ${p.item.name}! It's yours to keep!`);
     } else {
       const v = p.gems.reduce((t, k) => t + GEM[k].v, 0);
@@ -2011,7 +2039,8 @@ function offerChest(chance, after){
       document.body.appendChild(ov);
       $('#prizeOk').onclick = () => { sfx.pop(); ov.remove(); };
       const t = $('#tryOn');
-      if (t) t.onclick = () => { ov.remove(); sfx.pop(); S.look[p.item.slot] = p.item.id; if (p.item.slot === 'top' || p.item.slot === 'bottom') S.look.dress = null; save(); closetScreen(closetTab(p.item.slot)); say(`Ooh, ${p.item.name}!`); };
+      if (t && part(p.item.id)) t.onclick = () => { ov.remove(); S.car[p.item.slot] = p.item.id; save(); sfx.vroomShort(); garageScreen(p.item.slot); say(`Ooh, ${p.item.name}!`); };
+      else if (t) t.onclick = () => { ov.remove(); sfx.pop(); S.look[p.item.slot] = p.item.id; if (p.item.slot === 'top' || p.item.slot === 'bottom') S.look.dress = null; save(); closetScreen(closetTab(p.item.slot)); say(`Ooh, ${p.item.name}!`); };
     }, 450);
   };
   return true;
@@ -2064,7 +2093,176 @@ function closetScreen(tab){
   });
 }
 
-/* ================= HER HOUSE ================= */
+/* ================= HIS GARAGE (build and paint his race car) ================= */
+const CAR_PARTS = [
+  // car bodies
+  { id:'c_racer',  slot:'body', name:'Race Car',      cost:0 },
+  { id:'c_sports', slot:'body', name:'Sports Car',    cost:45 },
+  { id:'c_buggy',  slot:'body', name:'Dune Buggy',    cost:60 },
+  { id:'c_truck',  slot:'body', name:'Monster Truck', cost:90 },
+  { id:'c_rocket', slot:'body', name:'Rocket Car',    cost:0, chest:true },
+  // paint
+  { id:'c_red',    slot:'paint', name:'Red Paint',     cost:0,  c:['#ff5a4f','#c9221c'] },
+  { id:'c_blue',   slot:'paint', name:'Blue Paint',    cost:0,  c:['#5f9cff','#1f4fc0'] },
+  { id:'c_green',  slot:'paint', name:'Green Paint',   cost:20, c:['#6be37a','#23963b'] },
+  { id:'c_orange', slot:'paint', name:'Orange Paint',  cost:20, c:['#ffa04a','#e05a14'] },
+  { id:'c_yellow', slot:'paint', name:'Yellow Paint',  cost:20, c:['#ffe066','#f0b000'] },
+  { id:'c_purple', slot:'paint', name:'Purple Paint',  cost:25, c:['#b78cff','#6a36d0'] },
+  { id:'c_white',  slot:'paint', name:'White Paint',   cost:25, c:['#ffffff','#c9d0de'] },
+  { id:'c_black',  slot:'paint', name:'Black Paint',   cost:30, c:['#4a4f5e','#14161c'] },
+  { id:'c_chrome', slot:'paint', name:'Chrome Paint',  cost:40, c:['#ffffff','#9aa3b5','#e6eaf2','#6f7686'] },
+  { id:'c_gold',   slot:'paint', name:'Gold Paint',    cost:60, c:['#fff2a8','#ffd34d','#c98a00'] },
+  { id:'c_rainbow',slot:'paint', name:'Rainbow Paint', cost:70, c:['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#b16cf0'] },
+  { id:'c_galaxy', slot:'paint', name:'Galaxy Paint',  cost:0, chest:true, c:['#1a1150','#4a2cc0','#2fd0e0'] },
+  // stickers
+  { id:'c_n5',     slot:'deco', name:'Number 5',      cost:0 },
+  { id:'c_bolt',   slot:'deco', name:'Lightning',     cost:25 },
+  { id:'c_stripes',slot:'deco', name:'Race Stripes',  cost:30 },
+  { id:'c_stars',  slot:'deco', name:'Stars',         cost:30 },
+  { id:'c_flames', slot:'deco', name:'Flames',        cost:35 },
+  { id:'c_checks', slot:'deco', name:'Checkers',      cost:35 },
+  { id:'c_teeth',  slot:'deco', name:'Shark Teeth',   cost:45 },
+  // wheels
+  { id:'c_wblack', slot:'wheels', name:'Black Wheels',  cost:0,  rim:'#c9ced8', tire:'#24262e' },
+  { id:'c_wchrome',slot:'wheels', name:'Chrome Wheels', cost:30, rim:'#f4f6fa', tire:'#24262e', spokes:'#9aa3b5' },
+  { id:'c_wneon',  slot:'wheels', name:'Neon Wheels',   cost:45, rim:'#5bff8a', tire:'#1a1d24', glow:'#5bff8a' },
+  { id:'c_wgold',  slot:'wheels', name:'Gold Wheels',   cost:50, rim:'#ffd34d', tire:'#24262e', spokes:'#c98a00' },
+  { id:'c_wfire',  slot:'wheels', name:'Fire Wheels',   cost:0, chest:true, rim:'#ffb03b', tire:'#3a1a10', glow:'#ff6a2e' },
+  // wings
+  { id:'c_wing1',  slot:'wing', name:'Small Wing', cost:30 },
+  { id:'c_wing2',  slot:'wing', name:'Big Wing',   cost:50 },
+  // boosters
+  { id:'c_exhaust',slot:'boost', name:'Flame Exhaust', cost:40 },
+  { id:'c_nitro',  slot:'boost', name:'Nitro Tanks',   cost:50 },
+  { id:'c_booster',slot:'boost', name:'Rocket Booster',cost:0, chest:true }
+];
+const CAR_OPTIONAL = ['deco', 'wing', 'boost'];
+const CAR_START = ['c_racer', 'c_red', 'c_blue', 'c_n5', 'c_wblack'];
+const CAR_DEFAULT = { body:'c_racer', paint:'c_red', deco:'c_n5', wheels:'c_wblack', wing:null, boost:null };
+const part = id => CAR_PARTS.find(x => x.id === id);
+const anyItem = id => item(id) || part(id);
+if (!S.car){ S.car = Object.assign({}, CAR_DEFAULT); S.owned = [...new Set([...(S.owned || START_OWNED), ...CAR_START])]; save(); }
+
+// Draws his car facing right. driver = show Ian's head in the seat.
+function carSVG(car, driver = true){
+  const C = Object.assign({}, CAR_DEFAULT, car || S.car), n = ++svgN;
+  const body = (part(C.body) || part('c_racer')).id, pc = (part(C.paint) || part('c_red')).c, wh = part(C.wheels) || part('c_wblack');
+  const P = `url(#cp${n})`, glass = '#bfe6ff';
+  const stops = arr => arr.map((c, k) => `<stop offset="${arr.length > 1 ? k / (arr.length - 1) : 0}" stop-color="${c}"/>`).join('');
+  const big = body === 'c_truck';
+  const W = big ? [[58, 112, 30], [182, 112, 30]] : body === 'c_buggy' ? [[56, 116, 24], [186, 116, 24]] : [[58, 120, 20], [186, 120, 20]];
+  const wheel = ([x, y, r]) => `${wh.glow ? `<circle cx="${x}" cy="${y}" r="${r + 4}" fill="${wh.glow}" opacity=".35"/>` : ''}
+    <circle cx="${x}" cy="${y}" r="${r}" fill="${wh.tire}"/>${big ? [0, 45, 90, 135, 180, 225, 270, 315].map(a => `<rect x="${x - 3}" y="${y - r - 2}" width="6" height="6" rx="1" fill="${wh.tire}" transform="rotate(${a} ${x} ${y})"/>`).join('') : ''}
+    <circle cx="${x}" cy="${y}" r="${r * .5}" fill="${wh.rim}"/>
+    ${wh.spokes ? [0, 60, 120].map(a => `<path d="M${x - r * .45} ${y} H${x + r * .45}" stroke="${wh.spokes}" stroke-width="2.5" transform="rotate(${a} ${x} ${y})"/>`).join('') : ''}
+    <circle cx="${x}" cy="${y}" r="${r * .16}" fill="${wh.tire}"/>
+    ${C.wheels === 'c_wfire' ? `<path d="M${x - r} ${y + 2} Q${x - r - 18} ${y - 4} ${x - r - 30} ${y + 6} Q${x - r - 16} ${y + 10} ${x - r} ${y + 10}Z" fill="#ff8a3d" opacity=".85"/>` : ''}`;
+  // the driver's head sits in the seat (drawn before the body so the body hides his neck)
+  const head = (x, y, w) => driver ? guideSVG(null, 'head').replace('<svg ', `<svg x="${x}" y="${y}" width="${w}" height="${w * 160 / 144}" `) : '';
+  const shapes = {
+    c_racer: { seat:[100, 4, 62],
+      body:`<path d="M10 112 Q8 92 30 88 L90 80 Q96 70 110 68 L156 68 Q166 70 170 80 L214 86 Q234 90 232 112 Q230 122 220 122 H22 Q12 122 10 112Z" fill="${P}"/>
+            <path d="M208 92 L232 100 L232 108 L210 106Z" fill="rgba(0,0,0,.18)"/><circle cx="222" cy="98" r="4" fill="#fff6a8"/>`, deco:[150, 100] },
+    c_sports: { seat:[100, 22, 54],
+      body:`<path d="M84 80 Q100 56 130 54 Q154 54 168 78Z" fill="${glass}" opacity=".35"/>
+            <path d="M80 82 Q98 52 130 50 Q160 50 174 80" fill="none" stroke="${P}" stroke-width="7" stroke-linejoin="round"/><path d="M146 52 L148 80" stroke="${P}" stroke-width="6"/>
+            <path d="M8 110 Q6 88 30 84 L80 80 L172 78 L216 82 Q236 88 234 110 Q232 122 220 122 H20 Q10 122 8 110Z" fill="${P}"/>
+            <circle cx="224" cy="96" r="4" fill="#fff6a8"/>`, deco:[150, 100] },
+    c_buggy: { seat:[90, 12, 60],
+      body:`<path d="M18 112 Q16 96 34 92 L210 90 Q228 92 226 108 Q224 118 214 118 H28 Q18 118 18 112Z" fill="${P}"/>
+            <path d="M70 92 L86 44 H158 L176 90" stroke="#3a3f4b" stroke-width="7" fill="none" stroke-linejoin="round"/><path d="M86 44 L84 92 M158 44 L160 90" stroke="#3a3f4b" stroke-width="5"/>
+            <circle cx="216" cy="100" r="4" fill="#fff6a8"/>`, deco:[130, 104] },
+    c_truck: { seat:[98, 12, 56],
+      body:`<rect x="30" y="92" width="182" height="14" rx="4" fill="#3a3f4b"/>
+            <path d="M88 68 Q94 42 114 40 L158 40 Q170 42 176 66Z" fill="${glass}" opacity=".35"/>
+            <path d="M84 68 Q90 38 112 36 L160 36 Q172 38 180 68" fill="none" stroke="${P}" stroke-width="7" stroke-linejoin="round"/>
+            <path d="M14 92 Q12 70 32 68 L214 68 Q232 70 232 92 Q230 98 222 98 H22 Q14 98 14 92Z" fill="${P}"/><circle cx="224" cy="80" r="5" fill="#fff6a8"/>`, deco:[70, 80] },
+    c_rocket: { seat:[88, 6, 58],
+      body:`<path d="M14 116 Q10 90 34 86 L80 82 Q92 66 116 66 L150 68 Q166 72 176 84 Q214 90 238 104 Q216 120 196 122 H24 Q14 122 14 116Z" fill="${P}"/>
+            <path d="M24 86 L8 56 L44 84Z M28 122 L6 136 L50 122Z" fill="${P}" stroke="rgba(0,0,0,.2)" stroke-width="2"/>
+            <circle cx="186" cy="100" r="9" fill="${glass}" stroke="#fff" stroke-width="3"/>`, deco:[140, 102] }
+  };
+  const S1 = shapes[body];
+  const [dx, dy] = S1.deco;
+  const deco = {
+    c_n5: `<circle cx="${dx}" cy="${dy}" r="14" fill="#fff"/><text x="${dx}" y="${dy + 7}" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="20" fill="#1d2233">5</text>`,
+    c_bolt: `<path d="M${dx + 6} ${dy - 16} L${dx - 10} ${dy + 2} H${dx} L${dx - 6} ${dy + 18} L${dx + 12} ${dy - 2} H${dx + 2}Z" fill="#ffd34d" stroke="#c98a00" stroke-width="1.5" stroke-linejoin="round"/>`,
+    c_stripes: `<path d="M16 ${big ? 78 : 100} H228" stroke="#fff" stroke-width="7"/><path d="M16 ${big ? 88 : 110} H228" stroke="#1d2233" stroke-width="4"/>`,
+    c_stars: [[dx - 22, dy - 4, 7], [dx, dy + 4, 9], [dx + 24, dy - 6, 6]].map(([x, y, r]) =>
+      `<path d="M${x} ${y - r} L${x + r * .3} ${y - r * .3} L${x + r} ${y} L${x + r * .3} ${y + r * .3} L${x} ${y + r} L${x - r * .3} ${y + r * .3} L${x - r} ${y} L${x - r * .3} ${y - r * .3}Z" fill="#fff"/>`).join(''),
+    c_flames: `<path d="M226 ${dy + 4} Q200 ${dy - 16} 176 ${dy - 6} Q186 ${dy - 2} 182 ${dy + 4} Q164 ${dy - 10} 146 ${dy} Q156 ${dy + 4} 150 ${dy + 10} Q190 ${dy + 18} 226 ${dy + 4}Z" fill="#ffb03b"/>
+      <path d="M222 ${dy + 5} Q200 ${dy - 6} 184 ${dy + 2} Q196 ${dy + 12} 222 ${dy + 5}Z" fill="#ffe066"/>`,
+    c_checks: `<g>${[0, 1].map(r => [0, 1, 2, 3, 4, 5].map(c => (r + c) % 2 ? '' : `<rect x="${dx - 24 + c * 8}" y="${dy - 8 + r * 8}" width="8" height="8" fill="#1d2233"/>`).join('')).join('')}</g>
+      <rect x="${dx - 24}" y="${dy - 8}" width="48" height="16" fill="none" stroke="#1d2233" stroke-width="1.5"/>`,
+    c_teeth: `<path d="M196 ${big ? 86 : 108} ${[0, 1, 2, 3].map(j => `L${200 + j * 8} ${big ? 96 : 118} L${204 + j * 8} ${big ? 86 : 108}`).join(' ')}Z" fill="#fff" stroke="#1d2233" stroke-width="1.2"/>
+      <circle cx="${big ? 196 : 200}" cy="${big ? 76 : 96}" r="6" fill="#fff"/><circle cx="${big ? 198 : 202}" cy="${big ? 76 : 96}" r="3" fill="#1d2233"/>`
+  }[C.deco] || '';
+  const wingY = big ? 40 : 62;
+  const wing = {
+    c_wing1: `<path d="M24 ${wingY + 26} L30 ${wingY + 8}" stroke="#3a3f4b" stroke-width="5"/><rect x="6" y="${wingY}" width="44" height="9" rx="3" fill="${P}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>`,
+    c_wing2: `<path d="M20 ${wingY + 26} L24 ${wingY - 2} M40 ${wingY + 26} L42 ${wingY - 2}" stroke="#3a3f4b" stroke-width="5"/><rect x="0" y="${wingY - 12}" width="60" height="13" rx="4" fill="${P}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+      <path d="M0 ${wingY - 12} V${wingY + 4} M60 ${wingY - 12} V${wingY + 4}" stroke="#1d2233" stroke-width="4"/>`
+  }[C.wing] || '';
+  const ty = big ? 82 : 104;
+  const boost = {
+    c_exhaust: `<rect x="2" y="${ty}" width="14" height="8" rx="3" fill="#9aa3b5"/><path d="M2 ${ty - 2} Q-20 ${ty + 4} 2 ${ty + 10}Z" fill="#ff8a3d"/>`,
+    c_nitro: `<rect x="40" y="${ty - 30}" width="14" height="30" rx="6" fill="#4d8dff" stroke="#1f4fc0" stroke-width="2"/><rect x="56" y="${ty - 30}" width="14" height="30" rx="6" fill="#4d8dff" stroke="#1f4fc0" stroke-width="2"/>
+      <text x="55" y="${ty - 12}" text-anchor="middle" font-family="Arial" font-weight="700" font-size="9" fill="#fff">N</text>`,
+    c_booster: `<path d="M0 ${ty - 16} H30 V${ty + 8} H0Z" fill="#9aa3b5" stroke="#6f7686" stroke-width="2"/><path d="M0 ${ty - 14} Q-34 ${ty - 4} 0 ${ty + 6}Z" fill="#ff8a3d"/><path d="M0 ${ty - 10} Q-18 ${ty - 4} 0 ${ty + 2}Z" fill="#ffe066"/>`
+  }[C.boost] || '';
+  const [hx, hy, hw] = S1.seat;
+  return `<svg viewBox="-34 ${big ? -4 : 6} 276 ${big ? 150 : 140}" aria-hidden="true">
+    <defs><linearGradient id="cp${n}" x1="0" y1="0" x2="${pc.length > 2 ? 1 : 0}" y2="1">${stops(pc)}</linearGradient></defs>
+    <ellipse cx="122" cy="${big ? 142 : 140}" rx="110" ry="5" fill="rgba(0,0,0,.18)"/>
+    ${wing}${head(hx, hy, hw)}${S1.body}${deco}${boost}${W.map(wheel).join('')}
+  </svg>`;
+}
+function partSwatch(p){
+  if (p.slot === 'paint') return `<span class="sw" style="background:linear-gradient(135deg,${p.c.join(',')})"></span>`;
+  const look = Object.assign({}, S.car, { [p.slot]:p.id });
+  return `<span class="sw-car">${carSVG(look, false)}</span>`;
+}
+const GARAGE_TABS = [['body','🚗 Car'],['paint','🎨 Paint'],['deco','⚡ Stickers'],['wheels','🛞 Wheels'],['wing','🪽 Wing'],['boost','🔥 Boost']];
+function garageScreen(tab = 'body'){
+  setTop(true, true);
+  const T = GARAGE_TABS.find(t => t[0] === tab) || GARAGE_TABS[0]; tab = T[0];
+  const list = CAR_PARTS.filter(p => p.slot === tab);
+  screen.innerHTML = `<div class="closet">
+    <div class="car-stage"><div class="car-big" id="carBig">${carSVG()}</div></div>
+    <button class="big-btn" id="drive">🏁 Drive!</button>
+    <div class="tabs">${GARAGE_TABS.map(([k, l]) => `<button class="tab${k === tab ? ' on' : ''}" data-t="${k}">${l}</button>`).join('')}</div>
+    <div class="items">${list.map(p => {
+      const own = S.owned.includes(p.id), on = S.car[p.slot] === p.id;
+      const tag = on ? 'On ✓' : own ? 'Put on' : p.chest ? '🎁 In a chest' : '💎 ' + p.cost;
+      return `<button class="item${on ? ' on' : ''}${own ? '' : ' locked-item'}${!own && p.chest ? ' chest-item' : ''}" data-id="${p.id}">
+        ${partSwatch(p)}<b>${p.name}</b><small>${tag}</small></button>`;
+    }).join('')}</div>
+  </div>`;
+  const tabsEl = screen.querySelector('.tabs'), onTab = tabsEl.querySelector('.on');
+  if (onTab) tabsEl.scrollLeft = onTab.offsetLeft - 20;
+  screen.querySelectorAll('.tab').forEach(b => b.onclick = () => { sfx.pop(); garageScreen(b.dataset.t); });
+  $('#drive').onclick = () => {
+    const c = $('#carBig'); c.classList.remove('zoom'); void c.offsetWidth; c.classList.add('zoom');
+    sfx.vroom(); say('Ready, set, go! Vroom vroom!');
+  };
+  screen.querySelectorAll('.item').forEach(b => b.onclick = () => {
+    const p = part(b.dataset.id), own = S.owned.includes(p.id), on = S.car[p.slot] === p.id;
+    if (own && on && CAR_OPTIONAL.includes(p.slot)){ S.car[p.slot] = null; save(); sfx.pop(); garageScreen(tab); }
+    else if (own){ S.car[p.slot] = p.id; save(); sfx.vroomShort(); garageScreen(tab); say(`Ooh, ${p.name}!`); }
+    else if (p.chest){
+      b.classList.remove('wobble'); void b.offsetWidth; b.classList.add('wobble'); sfx.oops();
+      say(`${p.name} is a secret treasure! You can only find it in a treasure chest!`);
+    } else if (S.gems >= p.cost){
+      S.gems -= p.cost; S.owned.push(p.id); S.car[p.slot] = p.id; save();
+      sfx.tada(); sfx.cheer(); confetti(40); garageScreen(tab); say(`You got ${p.name}! It looks amazing!`);
+    } else {
+      b.classList.remove('wobble'); void b.offsetWidth; b.classList.add('wobble'); sfx.oops();
+      const need = p.cost - S.gems; say(`You need ${need} more ${need === 1 ? 'gem' : 'gems'}. Play a game to earn more!`);
+    }
+  });
+}
+
+/* ================= HIS ROOM ================= */
 // Room coordinates are % of the room box: x = center, y = bottom of the item. Sizes are % of room width.
 const FURN = [
   // furniture
@@ -2130,7 +2328,8 @@ const FLOORS = [
 const furn = id => FURN.find(f => f.id === id);
 function houseState(){
   if (!S.house) S.house = { wall:'w0', floor:'f0', owned:['bed', 'plant', 'w0', 'f0'], items:[
-    { id:'bed', x:20, y:92, flip:false }, { id:'plant', x:88, y:86, flip:false } ], me:{ x:56, y:96 } };
+    { id:'bed', x:20, y:92, flip:false }, { id:'plant', x:88, y:86, flip:false } ], me:{ x:50, y:96 } };
+  if (!S.house.car) S.house.car = { x:74, y:97 };
   return S.house;
 }
 const findBg = (arr, id) => (arr.find(x => x.id === id) || arr[0]).bg;
@@ -2145,9 +2344,10 @@ function roomHTML(edit){
     return `<div class="hitem${f.rug ? ' isrug' : ''}" data-k="${k}" style="left:${it.x}%;top:${it.y}%;z-index:${z}${it.flip ? ';--fx:-1' : ''}">${inner}</div>`;
   }).join('');
   const me = `<div class="hitem me" data-k="me" style="left:${H.me.x}%;top:${H.me.y}%;z-index:${10 + Math.round(H.me.y)}"><div class="me-in">${guideSVG(null, 'full')}${petTag()}</div></div>`;
+  const car = `<div class="hitem car" data-k="car" style="left:${H.car.x}%;top:${H.car.y}%;z-index:${10 + Math.round(H.car.y)}"><div class="room-car">${carSVG(null, false)}</div></div>`;
   return `<div class="room${edit ? ' edit' : ''}" id="room">
     <div class="wall" style="background:${findBg(WALLS, H.wall)}"></div><div class="floor" style="background:${findBg(FLOORS, H.floor)}"></div>
-    ${items}${me}</div>`;
+    ${items}${car}${me}</div>`;
 }
 function bindRoomDrag(onSelect){
   const room = $('#room'), H = houseState();
@@ -2155,8 +2355,8 @@ function bindRoomDrag(onSelect){
     el.onpointerdown = e => {
       e.preventDefault();
       const r = room.getBoundingClientRect(), k = el.dataset.k;
-      const obj = k === 'me' ? H.me : H.items[+k];
-      const f = k === 'me' ? null : furn(obj.id);
+      const obj = k === 'me' ? H.me : k === 'car' ? H.car : H.items[+k];
+      const f = k === 'me' || k === 'car' ? null : furn(obj.id);
       const sx = e.clientX, sy = e.clientY, ox = obj.x, oy = obj.y; let moved = false;
       try { el.setPointerCapture(e.pointerId); } catch(err){}
       el.classList.add('drag');
@@ -2204,6 +2404,7 @@ function houseScreen(tab = 'furn', sel = null){
   const tabsEl = screen.querySelector('.tabs'), onTab = tabsEl.querySelector('.on');
   if (onTab) tabsEl.scrollLeft = onTab.offsetLeft - 20;
   bindRoomDrag(k => {
+    if (k === 'car'){ const c = screen.querySelector('.hitem.car'); c.classList.remove('vroom'); void c.offsetWidth; c.classList.add('vroom'); sfx.vroomShort(); say('Vroom vroom!'); return; }
     if (k === 'me'){ const m = screen.querySelector('.hitem.me .me-in'); m.classList.remove('hop'); void m.offsetWidth; m.classList.add('hop'); say('This is my room!'); return; }
     sfx.pop(); houseScreen(tab, +k);
   });
@@ -2389,7 +2590,7 @@ function chapterMap(k){
   const deco = c.deco.map((e, i) => `<span class="deco" style="left:${(i * 37) % 92}%;top:${(i * 53 + 7) % 90}%">${e}</span>`).join('');
   const path = LEVEL_POS.map(([x, y]) => `${x},${y}`).join(' ');
   screen.innerHTML = `
-    <div class="chapter-head"><b>${c.icon} ${c.name}</b><small>${c.final ? 'Put on the big show!' : 'Rescue ' + esc(friendName(k)) + '!'}</small></div>
+    <div class="chapter-head"><b>${c.icon} ${c.name}</b><small>${c.final ? 'Win the big race!' : 'Rescue ' + esc(friendName(k)) + '!'}</small></div>
     <div class="world-map" style="background:${c.bg}">
       ${deco}
       <svg class="trail" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${path}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.6" stroke-dasharray="2 2.2" stroke-linecap="round"/></svg>
@@ -2400,12 +2601,12 @@ function chapterMap(k){
           ${last ? (i < cur ? '🎉' : '🔒') : i + 1}${stars ? `<span class="nstars">${'⭐'.repeat(stars)}</span>` : ''}</button>`;
       }).join('')}
       ${cur < 8 || c.final ? '' : `<div class="freed" style="left:${LEVEL_POS[7][0]}%;top:${LEVEL_POS[7][1]}%">${guideSVG(FRIEND_LOOKS[k], 'head')}</div>`}
-      <div class="walker" id="walker" style="left:${LEVEL_POS[at][0]}%;top:${LEVEL_POS[at][1]}%">${guideSVG(null, 'full')}${petTag()}</div>
+      <div class="walker" id="walker" style="left:${LEVEL_POS[at][0]}%;top:${LEVEL_POS[at][1]}%"><div class="walker-car">${carSVG()}</div>${petTag()}</div>
     </div>`;
   screen.querySelectorAll('.node').forEach(b => b.onclick = () => {
     const i = +b.dataset.i;
     if (i > cur){ b.classList.remove('wobble'); void b.offsetWidth; b.classList.add('wobble'); sfx.oops(); return say('Finish the level before it first!'); }
-    sfx.pop();
+    sfx.vroomShort();
     const w = $('#walker'); w.style.left = LEVEL_POS[i][0] + '%'; w.style.top = LEVEL_POS[i][1] + '%';
     setTimeout(() => storyLevel(k, i), 550);
   });
@@ -2830,7 +3031,7 @@ function balloonGame(){
 // One-time move to the full-body avatar: keep everything she bought, dress her as herself.
 if (!S.look){ // first start: dress him as himself
   const old = S.closet || {};
-  S.owned = [...new Set([...START_OWNED, ...(old.owned || [])])];
+  S.owned = [...new Set([...START_OWNED, ...(S.owned || []), ...(old.owned || [])])];
   S.look = Object.assign({}, IAN_LOOK);
   delete S.closet; save();
 }
@@ -2839,7 +3040,7 @@ if (!S.look){ // first start: dress him as himself
 // Each screen saves its name; if the phone reloads the app, "Keep playing" brings her back there.
 if (!S.played && S.rounds) S.played = S.rounds; // count games played before this update
 const RESUME = ['mapScreen','gardenScreen','closetScreen','worldScreen','chapterMap','storyLevel',
-  'balloonGame','mathGame','countGame','shapeGame','clockGame','coinGame','petsScreen','houseScreen'];
+  'balloonGame','mathGame','countGame','shapeGame','clockGame','coinGame','petsScreen','houseScreen','garageScreen'];
 const SCREENS = {};
 RESUME.forEach(name => {
   const orig = window[name]; SCREENS[name] = orig;
@@ -2849,7 +3050,7 @@ RESUME.forEach(name => {
 mapScreen = window.mapScreen; gardenScreen = window.gardenScreen; closetScreen = window.closetScreen;
 worldScreen = window.worldScreen; chapterMap = window.chapterMap; storyLevel = window.storyLevel;
 balloonGame = window.balloonGame; mathGame = window.mathGame; countGame = window.countGame;
-shapeGame = window.shapeGame; clockGame = window.clockGame; coinGame = window.coinGame; petsScreen = window.petsScreen; houseScreen = window.houseScreen;
+shapeGame = window.shapeGame; clockGame = window.clockGame; coinGame = window.coinGame; petsScreen = window.petsScreen; houseScreen = window.houseScreen; garageScreen = window.garageScreen;
 const _parent = parentScreen; parentScreen = (...a) => { S.where = ['parentScreen']; save(); return _parent(...a); };
 const _gate = parentGate; parentGate = (...a) => { S.where = ['parentScreen']; save(); return _gate(...a); };
 const _rescue = rescueScene; rescueScene = (...a) => { S.where = ['worldScreen']; save(); return _rescue(...a); };

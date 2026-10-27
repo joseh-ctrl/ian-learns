@@ -14090,6 +14090,556 @@
 "slow": false
 },
 {
+"k": "ooh, race car!",
+"t": "Ooh, Race Car!",
+"slow": false
+},
+{
+"k": "you got race car!",
+"t": "You got Race Car!",
+"slow": false
+},
+{
+"k": "you found race car!",
+"t": "You found Race Car!",
+"slow": false
+},
+{
+"k": "ooh, sports car!",
+"t": "Ooh, Sports Car!",
+"slow": false
+},
+{
+"k": "you got sports car!",
+"t": "You got Sports Car!",
+"slow": false
+},
+{
+"k": "you found sports car!",
+"t": "You found Sports Car!",
+"slow": false
+},
+{
+"k": "ooh, dune buggy!",
+"t": "Ooh, Dune Buggy!",
+"slow": false
+},
+{
+"k": "you got dune buggy!",
+"t": "You got Dune Buggy!",
+"slow": false
+},
+{
+"k": "you found dune buggy!",
+"t": "You found Dune Buggy!",
+"slow": false
+},
+{
+"k": "ooh, monster truck!",
+"t": "Ooh, Monster Truck!",
+"slow": false
+},
+{
+"k": "you got monster truck!",
+"t": "You got Monster Truck!",
+"slow": false
+},
+{
+"k": "you found monster truck!",
+"t": "You found Monster Truck!",
+"slow": false
+},
+{
+"k": "ooh, rocket car!",
+"t": "Ooh, Rocket Car!",
+"slow": false
+},
+{
+"k": "you got rocket car!",
+"t": "You got Rocket Car!",
+"slow": false
+},
+{
+"k": "you found rocket car!",
+"t": "You found Rocket Car!",
+"slow": false
+},
+{
+"k": "rocket car is a secret treasure!",
+"t": "Rocket Car is a secret treasure!",
+"slow": false
+},
+{
+"k": "ooh, red paint!",
+"t": "Ooh, Red Paint!",
+"slow": false
+},
+{
+"k": "you got red paint!",
+"t": "You got Red Paint!",
+"slow": false
+},
+{
+"k": "you found red paint!",
+"t": "You found Red Paint!",
+"slow": false
+},
+{
+"k": "ooh, blue paint!",
+"t": "Ooh, Blue Paint!",
+"slow": false
+},
+{
+"k": "you got blue paint!",
+"t": "You got Blue Paint!",
+"slow": false
+},
+{
+"k": "you found blue paint!",
+"t": "You found Blue Paint!",
+"slow": false
+},
+{
+"k": "ooh, green paint!",
+"t": "Ooh, Green Paint!",
+"slow": false
+},
+{
+"k": "you got green paint!",
+"t": "You got Green Paint!",
+"slow": false
+},
+{
+"k": "you found green paint!",
+"t": "You found Green Paint!",
+"slow": false
+},
+{
+"k": "ooh, orange paint!",
+"t": "Ooh, Orange Paint!",
+"slow": false
+},
+{
+"k": "you got orange paint!",
+"t": "You got Orange Paint!",
+"slow": false
+},
+{
+"k": "you found orange paint!",
+"t": "You found Orange Paint!",
+"slow": false
+},
+{
+"k": "ooh, yellow paint!",
+"t": "Ooh, Yellow Paint!",
+"slow": false
+},
+{
+"k": "you got yellow paint!",
+"t": "You got Yellow Paint!",
+"slow": false
+},
+{
+"k": "you found yellow paint!",
+"t": "You found Yellow Paint!",
+"slow": false
+},
+{
+"k": "ooh, purple paint!",
+"t": "Ooh, Purple Paint!",
+"slow": false
+},
+{
+"k": "you got purple paint!",
+"t": "You got Purple Paint!",
+"slow": false
+},
+{
+"k": "you found purple paint!",
+"t": "You found Purple Paint!",
+"slow": false
+},
+{
+"k": "ooh, white paint!",
+"t": "Ooh, White Paint!",
+"slow": false
+},
+{
+"k": "you got white paint!",
+"t": "You got White Paint!",
+"slow": false
+},
+{
+"k": "you found white paint!",
+"t": "You found White Paint!",
+"slow": false
+},
+{
+"k": "ooh, black paint!",
+"t": "Ooh, Black Paint!",
+"slow": false
+},
+{
+"k": "you got black paint!",
+"t": "You got Black Paint!",
+"slow": false
+},
+{
+"k": "you found black paint!",
+"t": "You found Black Paint!",
+"slow": false
+},
+{
+"k": "ooh, chrome paint!",
+"t": "Ooh, Chrome Paint!",
+"slow": false
+},
+{
+"k": "you got chrome paint!",
+"t": "You got Chrome Paint!",
+"slow": false
+},
+{
+"k": "you found chrome paint!",
+"t": "You found Chrome Paint!",
+"slow": false
+},
+{
+"k": "ooh, gold paint!",
+"t": "Ooh, Gold Paint!",
+"slow": false
+},
+{
+"k": "you got gold paint!",
+"t": "You got Gold Paint!",
+"slow": false
+},
+{
+"k": "you found gold paint!",
+"t": "You found Gold Paint!",
+"slow": false
+},
+{
+"k": "ooh, rainbow paint!",
+"t": "Ooh, Rainbow Paint!",
+"slow": false
+},
+{
+"k": "you got rainbow paint!",
+"t": "You got Rainbow Paint!",
+"slow": false
+},
+{
+"k": "you found rainbow paint!",
+"t": "You found Rainbow Paint!",
+"slow": false
+},
+{
+"k": "ooh, galaxy paint!",
+"t": "Ooh, Galaxy Paint!",
+"slow": false
+},
+{
+"k": "you got galaxy paint!",
+"t": "You got Galaxy Paint!",
+"slow": false
+},
+{
+"k": "you found galaxy paint!",
+"t": "You found Galaxy Paint!",
+"slow": false
+},
+{
+"k": "galaxy paint is a secret treasure!",
+"t": "Galaxy Paint is a secret treasure!",
+"slow": false
+},
+{
+"k": "ooh, number 5!",
+"t": "Ooh, Number 5!",
+"slow": false
+},
+{
+"k": "you got number 5!",
+"t": "You got Number 5!",
+"slow": false
+},
+{
+"k": "you found number 5!",
+"t": "You found Number 5!",
+"slow": false
+},
+{
+"k": "ooh, lightning!",
+"t": "Ooh, Lightning!",
+"slow": false
+},
+{
+"k": "you got lightning!",
+"t": "You got Lightning!",
+"slow": false
+},
+{
+"k": "you found lightning!",
+"t": "You found Lightning!",
+"slow": false
+},
+{
+"k": "ooh, race stripes!",
+"t": "Ooh, Race Stripes!",
+"slow": false
+},
+{
+"k": "you got race stripes!",
+"t": "You got Race Stripes!",
+"slow": false
+},
+{
+"k": "you found race stripes!",
+"t": "You found Race Stripes!",
+"slow": false
+},
+{
+"k": "ooh, stars!",
+"t": "Ooh, Stars!",
+"slow": false
+},
+{
+"k": "you got stars!",
+"t": "You got Stars!",
+"slow": false
+},
+{
+"k": "you found stars!",
+"t": "You found Stars!",
+"slow": false
+},
+{
+"k": "ooh, flames!",
+"t": "Ooh, Flames!",
+"slow": false
+},
+{
+"k": "you got flames!",
+"t": "You got Flames!",
+"slow": false
+},
+{
+"k": "you found flames!",
+"t": "You found Flames!",
+"slow": false
+},
+{
+"k": "ooh, checkers!",
+"t": "Ooh, Checkers!",
+"slow": false
+},
+{
+"k": "you got checkers!",
+"t": "You got Checkers!",
+"slow": false
+},
+{
+"k": "you found checkers!",
+"t": "You found Checkers!",
+"slow": false
+},
+{
+"k": "ooh, shark teeth!",
+"t": "Ooh, Shark Teeth!",
+"slow": false
+},
+{
+"k": "you got shark teeth!",
+"t": "You got Shark Teeth!",
+"slow": false
+},
+{
+"k": "you found shark teeth!",
+"t": "You found Shark Teeth!",
+"slow": false
+},
+{
+"k": "ooh, black wheels!",
+"t": "Ooh, Black Wheels!",
+"slow": false
+},
+{
+"k": "you got black wheels!",
+"t": "You got Black Wheels!",
+"slow": false
+},
+{
+"k": "you found black wheels!",
+"t": "You found Black Wheels!",
+"slow": false
+},
+{
+"k": "ooh, chrome wheels!",
+"t": "Ooh, Chrome Wheels!",
+"slow": false
+},
+{
+"k": "you got chrome wheels!",
+"t": "You got Chrome Wheels!",
+"slow": false
+},
+{
+"k": "you found chrome wheels!",
+"t": "You found Chrome Wheels!",
+"slow": false
+},
+{
+"k": "ooh, neon wheels!",
+"t": "Ooh, Neon Wheels!",
+"slow": false
+},
+{
+"k": "you got neon wheels!",
+"t": "You got Neon Wheels!",
+"slow": false
+},
+{
+"k": "you found neon wheels!",
+"t": "You found Neon Wheels!",
+"slow": false
+},
+{
+"k": "ooh, gold wheels!",
+"t": "Ooh, Gold Wheels!",
+"slow": false
+},
+{
+"k": "you got gold wheels!",
+"t": "You got Gold Wheels!",
+"slow": false
+},
+{
+"k": "you found gold wheels!",
+"t": "You found Gold Wheels!",
+"slow": false
+},
+{
+"k": "ooh, fire wheels!",
+"t": "Ooh, Fire Wheels!",
+"slow": false
+},
+{
+"k": "you got fire wheels!",
+"t": "You got Fire Wheels!",
+"slow": false
+},
+{
+"k": "you found fire wheels!",
+"t": "You found Fire Wheels!",
+"slow": false
+},
+{
+"k": "fire wheels is a secret treasure!",
+"t": "Fire Wheels is a secret treasure!",
+"slow": false
+},
+{
+"k": "ooh, small wing!",
+"t": "Ooh, Small Wing!",
+"slow": false
+},
+{
+"k": "you got small wing!",
+"t": "You got Small Wing!",
+"slow": false
+},
+{
+"k": "you found small wing!",
+"t": "You found Small Wing!",
+"slow": false
+},
+{
+"k": "ooh, big wing!",
+"t": "Ooh, Big Wing!",
+"slow": false
+},
+{
+"k": "you got big wing!",
+"t": "You got Big Wing!",
+"slow": false
+},
+{
+"k": "you found big wing!",
+"t": "You found Big Wing!",
+"slow": false
+},
+{
+"k": "ooh, flame exhaust!",
+"t": "Ooh, Flame Exhaust!",
+"slow": false
+},
+{
+"k": "you got flame exhaust!",
+"t": "You got Flame Exhaust!",
+"slow": false
+},
+{
+"k": "you found flame exhaust!",
+"t": "You found Flame Exhaust!",
+"slow": false
+},
+{
+"k": "ooh, nitro tanks!",
+"t": "Ooh, Nitro Tanks!",
+"slow": false
+},
+{
+"k": "you got nitro tanks!",
+"t": "You got Nitro Tanks!",
+"slow": false
+},
+{
+"k": "you found nitro tanks!",
+"t": "You found Nitro Tanks!",
+"slow": false
+},
+{
+"k": "ooh, rocket booster!",
+"t": "Ooh, Rocket Booster!",
+"slow": false
+},
+{
+"k": "you got rocket booster!",
+"t": "You got Rocket Booster!",
+"slow": false
+},
+{
+"k": "you found rocket booster!",
+"t": "You found Rocket Booster!",
+"slow": false
+},
+{
+"k": "rocket booster is a secret treasure!",
+"t": "Rocket Booster is a secret treasure!",
+"slow": false
+},
+{
+"k": "welcome to your garage!",
+"t": "Welcome to your garage!",
+"slow": false
+},
+{
+"k": "make your race car awesome!",
+"t": "Make your race car awesome!",
+"slow": false
+},
+{
+"k": "ready, set, go!",
+"t": "Ready, set, go!",
+"slow": false
+},
+{
+"k": "vroom vroom!",
+"t": "Vroom vroom!",
+"slow": false
+},
+{
 "k": "ooh, bed!",
 "t": "Ooh, Bed!",
 "slow": false
@@ -14287,11 +14837,6 @@
 {
 "k": "you got the guitar!",
 "t": "You got the Guitar!",
-"slow": false
-},
-{
-"k": "ooh, race car!",
-"t": "Ooh, Race Car!",
 "slow": false
 },
 {
@@ -15697,11 +16242,6 @@
 {
 "k": "practice lap!",
 "t": "Practice lap!",
-"slow": false
-},
-{
-"k": "ready, set, go!",
-"t": "Ready, set, go!",
 "slow": false
 },
 {
