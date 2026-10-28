@@ -14460,83 +14460,343 @@
 "slow": false
 },
 {
-"k": "ooh, black wheels!",
-"t": "Ooh, Black Wheels!",
+"k": "ooh, small tires!",
+"t": "Ooh, Small Tires!",
 "slow": false
 },
 {
-"k": "you got black wheels!",
-"t": "You got Black Wheels!",
+"k": "you got small tires!",
+"t": "You got Small Tires!",
 "slow": false
 },
 {
-"k": "you found black wheels!",
-"t": "You found Black Wheels!",
+"k": "you found small tires!",
+"t": "You found Small Tires!",
 "slow": false
 },
 {
-"k": "ooh, chrome wheels!",
-"t": "Ooh, Chrome Wheels!",
+"k": "ooh, normal tires!",
+"t": "Ooh, Normal Tires!",
 "slow": false
 },
 {
-"k": "you got chrome wheels!",
-"t": "You got Chrome Wheels!",
+"k": "you got normal tires!",
+"t": "You got Normal Tires!",
 "slow": false
 },
 {
-"k": "you found chrome wheels!",
-"t": "You found Chrome Wheels!",
+"k": "you found normal tires!",
+"t": "You found Normal Tires!",
 "slow": false
 },
 {
-"k": "ooh, neon wheels!",
-"t": "Ooh, Neon Wheels!",
+"k": "ooh, big tires!",
+"t": "Ooh, Big Tires!",
 "slow": false
 },
 {
-"k": "you got neon wheels!",
-"t": "You got Neon Wheels!",
+"k": "you got big tires!",
+"t": "You got Big Tires!",
 "slow": false
 },
 {
-"k": "you found neon wheels!",
-"t": "You found Neon Wheels!",
+"k": "you found big tires!",
+"t": "You found Big Tires!",
 "slow": false
 },
 {
-"k": "ooh, gold wheels!",
-"t": "Ooh, Gold Wheels!",
+"k": "ooh, monster tires!",
+"t": "Ooh, Monster Tires!",
 "slow": false
 },
 {
-"k": "you got gold wheels!",
-"t": "You got Gold Wheels!",
+"k": "you got monster tires!",
+"t": "You got Monster Tires!",
 "slow": false
 },
 {
-"k": "you found gold wheels!",
-"t": "You found Gold Wheels!",
+"k": "you found monster tires!",
+"t": "You found Monster Tires!",
 "slow": false
 },
 {
-"k": "ooh, fire wheels!",
-"t": "Ooh, Fire Wheels!",
+"k": "ooh, street tires!",
+"t": "Ooh, Street Tires!",
 "slow": false
 },
 {
-"k": "you got fire wheels!",
-"t": "You got Fire Wheels!",
+"k": "you got street tires!",
+"t": "You got Street Tires!",
 "slow": false
 },
 {
-"k": "you found fire wheels!",
-"t": "You found Fire Wheels!",
+"k": "you found street tires!",
+"t": "You found Street Tires!",
 "slow": false
 },
 {
-"k": "fire wheels is a secret treasure!",
-"t": "Fire Wheels is a secret treasure!",
+"k": "ooh, racing slicks!",
+"t": "Ooh, Racing Slicks!",
+"slow": false
+},
+{
+"k": "you got racing slicks!",
+"t": "You got Racing Slicks!",
+"slow": false
+},
+{
+"k": "you found racing slicks!",
+"t": "You found Racing Slicks!",
+"slow": false
+},
+{
+"k": "ooh, whitewalls!",
+"t": "Ooh, Whitewalls!",
+"slow": false
+},
+{
+"k": "you got whitewalls!",
+"t": "You got Whitewalls!",
+"slow": false
+},
+{
+"k": "you found whitewalls!",
+"t": "You found Whitewalls!",
+"slow": false
+},
+{
+"k": "ooh, off-road tires!",
+"t": "Ooh, Off-Road Tires!",
+"slow": false
+},
+{
+"k": "you got off-road tires!",
+"t": "You got Off-Road Tires!",
+"slow": false
+},
+{
+"k": "you found off-road tires!",
+"t": "You found Off-Road Tires!",
+"slow": false
+},
+{
+"k": "ooh, black rims!",
+"t": "Ooh, Black Rims!",
+"slow": false
+},
+{
+"k": "you got black rims!",
+"t": "You got Black Rims!",
+"slow": false
+},
+{
+"k": "you found black rims!",
+"t": "You found Black Rims!",
+"slow": false
+},
+{
+"k": "ooh, chrome rims!",
+"t": "Ooh, Chrome Rims!",
+"slow": false
+},
+{
+"k": "you got chrome rims!",
+"t": "You got Chrome Rims!",
+"slow": false
+},
+{
+"k": "you found chrome rims!",
+"t": "You found Chrome Rims!",
+"slow": false
+},
+{
+"k": "ooh, mesh rims!",
+"t": "Ooh, Mesh Rims!",
+"slow": false
+},
+{
+"k": "you got mesh rims!",
+"t": "You got Mesh Rims!",
+"slow": false
+},
+{
+"k": "you found mesh rims!",
+"t": "You found Mesh Rims!",
+"slow": false
+},
+{
+"k": "ooh, neon rims!",
+"t": "Ooh, Neon Rims!",
+"slow": false
+},
+{
+"k": "you got neon rims!",
+"t": "You got Neon Rims!",
+"slow": false
+},
+{
+"k": "you found neon rims!",
+"t": "You found Neon Rims!",
+"slow": false
+},
+{
+"k": "ooh, gold rims!",
+"t": "Ooh, Gold Rims!",
+"slow": false
+},
+{
+"k": "you got gold rims!",
+"t": "You got Gold Rims!",
+"slow": false
+},
+{
+"k": "you found gold rims!",
+"t": "You found Gold Rims!",
+"slow": false
+},
+{
+"k": "ooh, fire rims!",
+"t": "Ooh, Fire Rims!",
+"slow": false
+},
+{
+"k": "you got fire rims!",
+"t": "You got Fire Rims!",
+"slow": false
+},
+{
+"k": "you found fire rims!",
+"t": "You found Fire Rims!",
+"slow": false
+},
+{
+"k": "fire rims is a secret treasure!",
+"t": "Fire Rims is a secret treasure!",
+"slow": false
+},
+{
+"k": "ooh, white headlights!",
+"t": "Ooh, White Headlights!",
+"slow": false
+},
+{
+"k": "you got white headlights!",
+"t": "You got White Headlights!",
+"slow": false
+},
+{
+"k": "you found white headlights!",
+"t": "You found White Headlights!",
+"slow": false
+},
+{
+"k": "ooh, yellow headlights!",
+"t": "Ooh, Yellow Headlights!",
+"slow": false
+},
+{
+"k": "you got yellow headlights!",
+"t": "You got Yellow Headlights!",
+"slow": false
+},
+{
+"k": "you found yellow headlights!",
+"t": "You found Yellow Headlights!",
+"slow": false
+},
+{
+"k": "ooh, blue headlights!",
+"t": "Ooh, Blue Headlights!",
+"slow": false
+},
+{
+"k": "you got blue headlights!",
+"t": "You got Blue Headlights!",
+"slow": false
+},
+{
+"k": "you found blue headlights!",
+"t": "You found Blue Headlights!",
+"slow": false
+},
+{
+"k": "ooh, green headlights!",
+"t": "Ooh, Green Headlights!",
+"slow": false
+},
+{
+"k": "you got green headlights!",
+"t": "You got Green Headlights!",
+"slow": false
+},
+{
+"k": "you found green headlights!",
+"t": "You found Green Headlights!",
+"slow": false
+},
+{
+"k": "ooh, blue underglow!",
+"t": "Ooh, Blue Underglow!",
+"slow": false
+},
+{
+"k": "you got blue underglow!",
+"t": "You got Blue Underglow!",
+"slow": false
+},
+{
+"k": "you found blue underglow!",
+"t": "You found Blue Underglow!",
+"slow": false
+},
+{
+"k": "ooh, green underglow!",
+"t": "Ooh, Green Underglow!",
+"slow": false
+},
+{
+"k": "you got green underglow!",
+"t": "You got Green Underglow!",
+"slow": false
+},
+{
+"k": "you found green underglow!",
+"t": "You found Green Underglow!",
+"slow": false
+},
+{
+"k": "ooh, purple underglow!",
+"t": "Ooh, Purple Underglow!",
+"slow": false
+},
+{
+"k": "you got purple underglow!",
+"t": "You got Purple Underglow!",
+"slow": false
+},
+{
+"k": "you found purple underglow!",
+"t": "You found Purple Underglow!",
+"slow": false
+},
+{
+"k": "ooh, rainbow underglow!",
+"t": "Ooh, Rainbow Underglow!",
+"slow": false
+},
+{
+"k": "you got rainbow underglow!",
+"t": "You got Rainbow Underglow!",
+"slow": false
+},
+{
+"k": "you found rainbow underglow!",
+"t": "You found Rainbow Underglow!",
+"slow": false
+},
+{
+"k": "rainbow underglow is a secret treasure!",
+"t": "Rainbow Underglow is a secret treasure!",
 "slow": false
 },
 {
@@ -14567,6 +14827,111 @@
 {
 "k": "you found big wing!",
 "t": "You found Big Wing!",
+"slow": false
+},
+{
+"k": "ooh, carbon wing!",
+"t": "Ooh, Carbon Wing!",
+"slow": false
+},
+{
+"k": "you got carbon wing!",
+"t": "You got Carbon Wing!",
+"slow": false
+},
+{
+"k": "you found carbon wing!",
+"t": "You found Carbon Wing!",
+"slow": false
+},
+{
+"k": "ooh, gold wing!",
+"t": "Ooh, Gold Wing!",
+"slow": false
+},
+{
+"k": "you got gold wing!",
+"t": "You got Gold Wing!",
+"slow": false
+},
+{
+"k": "you found gold wing!",
+"t": "You found Gold Wing!",
+"slow": false
+},
+{
+"k": "ooh, antenna flag!",
+"t": "Ooh, Antenna Flag!",
+"slow": false
+},
+{
+"k": "you got antenna flag!",
+"t": "You got Antenna Flag!",
+"slow": false
+},
+{
+"k": "you found antenna flag!",
+"t": "You found Antenna Flag!",
+"slow": false
+},
+{
+"k": "ooh, roof box!",
+"t": "Ooh, Roof Box!",
+"slow": false
+},
+{
+"k": "you got roof box!",
+"t": "You got Roof Box!",
+"slow": false
+},
+{
+"k": "you found roof box!",
+"t": "You found Roof Box!",
+"slow": false
+},
+{
+"k": "ooh, roof lights!",
+"t": "Ooh, Roof Lights!",
+"slow": false
+},
+{
+"k": "you got roof lights!",
+"t": "You got Roof Lights!",
+"slow": false
+},
+{
+"k": "you found roof lights!",
+"t": "You found Roof Lights!",
+"slow": false
+},
+{
+"k": "ooh, siren lights!",
+"t": "Ooh, Siren Lights!",
+"slow": false
+},
+{
+"k": "you got siren lights!",
+"t": "You got Siren Lights!",
+"slow": false
+},
+{
+"k": "you found siren lights!",
+"t": "You found Siren Lights!",
+"slow": false
+},
+{
+"k": "ooh, twin pipes!",
+"t": "Ooh, Twin Pipes!",
+"slow": false
+},
+{
+"k": "you got twin pipes!",
+"t": "You got Twin Pipes!",
+"slow": false
+},
+{
+"k": "you found twin pipes!",
+"t": "You found Twin Pipes!",
 "slow": false
 },
 {
@@ -14617,6 +14982,66 @@
 {
 "k": "rocket booster is a secret treasure!",
 "t": "Rocket Booster is a secret treasure!",
+"slow": false
+},
+{
+"k": "ooh, beep horn!",
+"t": "Ooh, Beep Horn!",
+"slow": false
+},
+{
+"k": "you got beep horn!",
+"t": "You got Beep Horn!",
+"slow": false
+},
+{
+"k": "you found beep horn!",
+"t": "You found Beep Horn!",
+"slow": false
+},
+{
+"k": "ooh, silly horn!",
+"t": "Ooh, Silly Horn!",
+"slow": false
+},
+{
+"k": "you got silly horn!",
+"t": "You got Silly Horn!",
+"slow": false
+},
+{
+"k": "you found silly horn!",
+"t": "You found Silly Horn!",
+"slow": false
+},
+{
+"k": "ooh, truck horn!",
+"t": "Ooh, Truck Horn!",
+"slow": false
+},
+{
+"k": "you got truck horn!",
+"t": "You got Truck Horn!",
+"slow": false
+},
+{
+"k": "you found truck horn!",
+"t": "You found Truck Horn!",
+"slow": false
+},
+{
+"k": "ooh, music horn!",
+"t": "Ooh, Music Horn!",
+"slow": false
+},
+{
+"k": "you got music horn!",
+"t": "You got Music Horn!",
+"slow": false
+},
+{
+"k": "you found music horn!",
+"t": "You found Music Horn!",
 "slow": false
 },
 {

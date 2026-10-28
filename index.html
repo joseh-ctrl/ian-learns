@@ -254,9 +254,10 @@ h1.title{margin:0;font-size:clamp(2rem,9vw,3.4rem);line-height:1.05;
 .car-big.zoom{animation:zoom 1.9s cubic-bezier(.5,0,.5,1)}
 @keyframes zoom{0%{transform:translateX(0)}12%{transform:translateX(-6%) rotate(1deg)}45%{transform:translateX(130%)}46%{transform:translateX(-130%)}100%{transform:translateX(0)}}
 .sw-car{width:96px;display:block}
+.sw-wheel{width:58px;height:58px;display:block}.sw-wheel svg{width:100%;height:100%}
 .hitem.car .room-car{width:24cqw}
 .hitem.car.vroom .room-car{animation:hop .5s}
-.walker{width:clamp(70px,19vw,96px)}
+.walker{width:clamp(84px,24vw,120px)}
 /* dressing room */
 .closet{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:640px}
 .uni.preview{width:clamp(120px,34vw,180px);cursor:default}
@@ -2102,18 +2103,18 @@ const CAR_PARTS = [
   { id:'c_truck',  slot:'body', name:'Monster Truck', cost:90 },
   { id:'c_rocket', slot:'body', name:'Rocket Car',    cost:0, chest:true },
   // paint
-  { id:'c_red',    slot:'paint', name:'Red Paint',     cost:0,  c:['#ff5a4f','#c9221c'] },
-  { id:'c_blue',   slot:'paint', name:'Blue Paint',    cost:0,  c:['#5f9cff','#1f4fc0'] },
-  { id:'c_green',  slot:'paint', name:'Green Paint',   cost:20, c:['#6be37a','#23963b'] },
-  { id:'c_orange', slot:'paint', name:'Orange Paint',  cost:20, c:['#ffa04a','#e05a14'] },
-  { id:'c_yellow', slot:'paint', name:'Yellow Paint',  cost:20, c:['#ffe066','#f0b000'] },
-  { id:'c_purple', slot:'paint', name:'Purple Paint',  cost:25, c:['#b78cff','#6a36d0'] },
-  { id:'c_white',  slot:'paint', name:'White Paint',   cost:25, c:['#ffffff','#c9d0de'] },
-  { id:'c_black',  slot:'paint', name:'Black Paint',   cost:30, c:['#4a4f5e','#14161c'] },
-  { id:'c_chrome', slot:'paint', name:'Chrome Paint',  cost:40, c:['#ffffff','#9aa3b5','#e6eaf2','#6f7686'] },
-  { id:'c_gold',   slot:'paint', name:'Gold Paint',    cost:60, c:['#fff2a8','#ffd34d','#c98a00'] },
-  { id:'c_rainbow',slot:'paint', name:'Rainbow Paint', cost:70, c:['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#b16cf0'] },
-  { id:'c_galaxy', slot:'paint', name:'Galaxy Paint',  cost:0, chest:true, c:['#1a1150','#4a2cc0','#2fd0e0'] },
+  { id:'c_red',    slot:'paint', name:'Red Paint',     cost:0,  c:['#ff6a5c','#e0281f','#9c1610'] },
+  { id:'c_blue',   slot:'paint', name:'Blue Paint',    cost:0,  c:['#6aa6ff','#2259d6','#123a96'] },
+  { id:'c_green',  slot:'paint', name:'Green Paint',   cost:20, c:['#72ea84','#22a33e','#126b26'] },
+  { id:'c_orange', slot:'paint', name:'Orange Paint',  cost:20, c:['#ffb062','#f26a12','#a8440a'] },
+  { id:'c_yellow', slot:'paint', name:'Yellow Paint',  cost:20, c:['#fff08a','#ffc61a','#c58e00'] },
+  { id:'c_purple', slot:'paint', name:'Purple Paint',  cost:25, c:['#c3a0ff','#7440e0','#46209a'] },
+  { id:'c_white',  slot:'paint', name:'White Paint',   cost:25, c:['#ffffff','#eef1f7','#aeb6c6'] },
+  { id:'c_black',  slot:'paint', name:'Black Paint',   cost:30, c:['#5d6375','#22252e','#0b0c10'] },
+  { id:'c_chrome', slot:'paint', name:'Chrome Paint',  cost:40, c:['#ffffff','#9aa3b5','#eef1f7','#6f7686'] },
+  { id:'c_gold',   slot:'paint', name:'Gold Paint',    cost:60, c:['#fff4b0','#ffd34d','#c98a00'] },
+  { id:'c_rainbow',slot:'paint', name:'Rainbow Paint', cost:70, c:['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#b16cf0'], side:true },
+  { id:'c_galaxy', slot:'paint', name:'Galaxy Paint',  cost:0, chest:true, c:['#3a2cc0','#1a1150','#2fd0e0'], side:true },
   // stickers
   { id:'c_n5',     slot:'deco', name:'Number 5',      cost:0 },
   { id:'c_bolt',   slot:'deco', name:'Lightning',     cost:25 },
@@ -2122,117 +2123,237 @@ const CAR_PARTS = [
   { id:'c_flames', slot:'deco', name:'Flames',        cost:35 },
   { id:'c_checks', slot:'deco', name:'Checkers',      cost:35 },
   { id:'c_teeth',  slot:'deco', name:'Shark Teeth',   cost:45 },
-  // wheels
-  { id:'c_wblack', slot:'wheels', name:'Black Wheels',  cost:0,  rim:'#c9ced8', tire:'#24262e' },
-  { id:'c_wchrome',slot:'wheels', name:'Chrome Wheels', cost:30, rim:'#f4f6fa', tire:'#24262e', spokes:'#9aa3b5' },
-  { id:'c_wneon',  slot:'wheels', name:'Neon Wheels',   cost:45, rim:'#5bff8a', tire:'#1a1d24', glow:'#5bff8a' },
-  { id:'c_wgold',  slot:'wheels', name:'Gold Wheels',   cost:50, rim:'#ffd34d', tire:'#24262e', spokes:'#c98a00' },
-  { id:'c_wfire',  slot:'wheels', name:'Fire Wheels',   cost:0, chest:true, rim:'#ffb03b', tire:'#3a1a10', glow:'#ff6a2e' },
+  // tire size and tire type
+  { id:'c_tsmall', slot:'tsize', name:'Small Tires',   cost:20, r:16 },
+  { id:'c_tnorm',  slot:'tsize', name:'Normal Tires',  cost:0,  r:20 },
+  { id:'c_tbig',   slot:'tsize', name:'Big Tires',     cost:40, r:26 },
+  { id:'c_tmonster',slot:'tsize',name:'Monster Tires', cost:70, r:34 },
+  { id:'c_tstreet',slot:'ttype', name:'Street Tires',  cost:0 },
+  { id:'c_tslick', slot:'ttype', name:'Racing Slicks', cost:25 },
+  { id:'c_twhite', slot:'ttype', name:'Whitewalls',    cost:30 },
+  { id:'c_toff',   slot:'ttype', name:'Off-Road Tires',cost:35 },
+  // rims
+  { id:'c_wblack', slot:'wheels', name:'Black Rims',  cost:0,  rim:'#3a3f4b', hi:'#8a93a8', style:'disc' },
+  { id:'c_wchrome',slot:'wheels', name:'Chrome Rims', cost:30, rim:'#eef1f7', hi:'#9aa3b5', style:'5' },
+  { id:'c_wmesh',  slot:'wheels', name:'Mesh Rims',   cost:35, rim:'#d9dde6', hi:'#7d8596', style:'mesh' },
+  { id:'c_wneon',  slot:'wheels', name:'Neon Rims',   cost:45, rim:'#5bff8a', hi:'#1fa34a', style:'6', glow:'#5bff8a' },
+  { id:'c_wgold',  slot:'wheels', name:'Gold Rims',   cost:50, rim:'#ffd34d', hi:'#b37a00', style:'6' },
+  { id:'c_wfire',  slot:'wheels', name:'Fire Rims',   cost:0, chest:true, rim:'#ffb03b', hi:'#d0400a', style:'star', glow:'#ff6a2e' },
+  // headlights and underglow
+  { id:'c_lwhite', slot:'lights', name:'White Headlights',  cost:0,  c:'#fffbe0' },
+  { id:'c_lyellow',slot:'lights', name:'Yellow Headlights', cost:20, c:'#ffd84d' },
+  { id:'c_lblue',  slot:'lights', name:'Blue Headlights',   cost:20, c:'#7fd8ff' },
+  { id:'c_lgreen', slot:'lights', name:'Green Headlights',  cost:25, c:'#7dff9a' },
+  { id:'c_gblue',  slot:'glow', name:'Blue Underglow',    cost:40, c:'#3fa6ff' },
+  { id:'c_ggreen', slot:'glow', name:'Green Underglow',   cost:40, c:'#3fff7a' },
+  { id:'c_gpurple',slot:'glow', name:'Purple Underglow',  cost:40, c:'#b45cff' },
+  { id:'c_grainbow',slot:'glow',name:'Rainbow Underglow', cost:0, chest:true, c:'rainbow' },
   // wings
-  { id:'c_wing1',  slot:'wing', name:'Small Wing', cost:30 },
-  { id:'c_wing2',  slot:'wing', name:'Big Wing',   cost:50 },
-  // boosters
+  { id:'c_wing1',  slot:'wing', name:'Small Wing',  cost:30 },
+  { id:'c_wing2',  slot:'wing', name:'Big Wing',    cost:50 },
+  { id:'c_wing3',  slot:'wing', name:'Carbon Wing', cost:45, c:'#22252e' },
+  { id:'c_wing4',  slot:'wing', name:'Gold Wing',   cost:60, c:'#ffd34d' },
+  // roof
+  { id:'c_flag',   slot:'roof', name:'Antenna Flag', cost:25 },
+  { id:'c_rbox',   slot:'roof', name:'Roof Box',     cost:35 },
+  { id:'c_rlights',slot:'roof', name:'Roof Lights',  cost:40 },
+  { id:'c_siren',  slot:'roof', name:'Siren Lights', cost:45 },
+  // boosters and pipes
+  { id:'c_twin',   slot:'boost', name:'Twin Pipes',    cost:30 },
   { id:'c_exhaust',slot:'boost', name:'Flame Exhaust', cost:40 },
   { id:'c_nitro',  slot:'boost', name:'Nitro Tanks',   cost:50 },
-  { id:'c_booster',slot:'boost', name:'Rocket Booster',cost:0, chest:true }
+  { id:'c_booster',slot:'boost', name:'Rocket Booster',cost:0, chest:true },
+  // horns
+  { id:'c_hbeep',  slot:'horn', name:'Beep Horn',  cost:0,  icon:'📯' },
+  { id:'c_hsilly', slot:'horn', name:'Silly Horn', cost:25, icon:'🤡' },
+  { id:'c_htruck', slot:'horn', name:'Truck Horn', cost:30, icon:'🚚' },
+  { id:'c_hmusic', slot:'horn', name:'Music Horn', cost:40, icon:'🎵' }
 ];
-const CAR_OPTIONAL = ['deco', 'wing', 'boost'];
-const CAR_START = ['c_racer', 'c_red', 'c_blue', 'c_n5', 'c_wblack'];
-const CAR_DEFAULT = { body:'c_racer', paint:'c_red', deco:'c_n5', wheels:'c_wblack', wing:null, boost:null };
+const CAR_OPTIONAL = ['deco', 'wing', 'boost', 'roof', 'glow'];
+const CAR_START = ['c_racer', 'c_red', 'c_blue', 'c_n5', 'c_wblack', 'c_tnorm', 'c_tstreet', 'c_lwhite', 'c_hbeep'];
+const CAR_DEFAULT = { body:'c_racer', paint:'c_red', deco:'c_n5', wheels:'c_wblack', tsize:'c_tnorm', ttype:'c_tstreet',
+  lights:'c_lwhite', horn:'c_hbeep', glow:null, wing:null, roof:null, boost:null };
 const part = id => CAR_PARTS.find(x => x.id === id);
 const anyItem = id => item(id) || part(id);
-if (!S.car){ S.car = Object.assign({}, CAR_DEFAULT); S.owned = [...new Set([...(S.owned || START_OWNED), ...CAR_START])]; save(); }
+// first start, or an older save: fill in any new parts and give him the free ones
+S.car = Object.assign({}, CAR_DEFAULT, S.car || {});
+S.owned = [...new Set([...(S.owned || START_OWNED), ...CAR_START])]; save();
 
-// Draws his car facing right. driver = show Ian's head in the seat.
+// Each car shape: outline, side window, where things attach. Car faces right; ground is y = 140.
+const CAR_SHAPES = {
+  c_racer: { wx:[60, 192], arch:26, lift:0, roof:[130, 54], rear:[24, 86], front:[244, 100], deco:[128, 102], beltY:84,
+    body:'M16 114 L16 98 Q16 88 28 86 L66 82 Q86 60 112 56 L150 54 Q170 56 188 74 L224 82 Q242 86 244 100 L244 110 Q242 118 234 118 L218 118 A26 26 0 0 0 166 118 L86 118 A26 26 0 0 0 34 118 L24 118 Q16 118 16 114Z',
+    win:'M74 82 Q90 64 112 60 L148 58 Q162 60 178 76 L178 82Z', pillar:'M128 59 V82', door:'M100 86 L102 114 M166 84 L164 114', handle:[140, 90],
+    head:[132, 40, 38], light:'M228 88 Q240 90 243 98 L232 98Z', tail:'M16 92 L26 90 L26 99 L16 100Z', mirror:[176, 78] },
+  c_sports: { wx:[60, 196], arch:26, lift:0, roof:[136, 58], rear:[22, 88], front:[246, 104], deco:[132, 104], beltY:86,
+    body:'M14 112 L14 100 Q16 90 30 88 L70 84 Q94 62 124 58 L148 58 Q172 62 192 80 L230 86 Q246 90 246 104 L246 112 Q244 118 236 118 L222 118 A26 26 0 0 0 170 118 L86 118 A26 26 0 0 0 34 118 L22 118 Q14 118 14 112Z',
+    win:'M80 84 Q98 66 124 62 L146 62 Q164 66 182 82 L182 86 L80 86Z', pillar:'M118 63 L116 86', door:'M104 88 L106 114 M174 86 L170 114', handle:[150, 92],
+    head:[124, 44, 36], light:'M232 92 Q244 94 246 102 L236 102Z', tail:'M14 96 L24 94 L24 102 L14 103Z', mirror:[180, 82] },
+  c_truck: { wx:[58, 196], arch:30, lift:14, roof:[134, 44], rear:[16, 80], front:[244, 92], deco:[66, 98], beltY:78,
+    body:'M12 110 L12 84 Q12 78 18 78 L104 78 L106 50 Q108 44 116 44 L152 44 Q160 44 166 54 L178 74 L228 78 Q244 80 244 94 L244 108 Q242 116 234 116 L226 116 A30 30 0 0 0 166 116 L88 116 A30 30 0 0 0 28 116 L20 116 Q12 116 12 110Z',
+    win:'M112 76 L113 52 Q114 49 118 49 L150 49 Q156 49 160 56 L170 76Z', pillar:'', door:'M108 78 L108 114 M170 78 Q172 96 168 114', handle:[150, 84],
+    head:[118, 30, 38], light:'M232 82 Q242 84 244 92 L234 92Z', tail:'M12 82 L20 82 L20 92 L12 92Z', mirror:[168, 72], bed:true },
+  c_buggy: { wx:[58, 192], arch:24, lift:6, roof:[128, 46], rear:[26, 96], front:[230, 106], deco:[130, 104], beltY:94, open:true,
+    body:'M20 112 Q18 98 34 96 L84 94 L96 84 L170 84 L214 94 Q230 96 230 106 L228 112 Q226 118 216 118 L216 118 A24 24 0 0 0 168 118 L82 118 A24 24 0 0 0 34 118 L28 118 Q20 118 20 112Z',
+    cage:'M82 94 L96 46 H160 L184 92 M96 46 L94 92 M160 46 L158 86', head:[110, 30, 40], light:'M218 96 a6 6 0 1 0 0.1 0Z', tail:'M20 100 L28 100 L28 106 L20 106Z' },
+  c_rocket: { wx:[64, 190], arch:24, lift:0, roof:[124, 64], rear:[30, 90], front:[252, 106], deco:[140, 104], beltY:90,
+    body:'M10 114 Q6 96 26 92 L72 88 Q90 66 120 64 L150 66 Q176 72 196 86 Q232 92 252 106 Q234 118 214 118 A24 24 0 0 0 166 118 L88 118 A24 24 0 0 0 40 118 L22 118 Q10 118 10 114Z',
+    win:'M86 88 Q100 68 122 68 Q150 70 172 88Z', pillar:'', door:'', fins:'M26 92 L8 58 L50 88Z', head:[108, 44, 40],
+    light:'M236 100 L250 106 L236 108Z', tail:'M10 104 L18 102 L18 110 L10 110Z' }
+};
+
+function wheelSVG(x, cy, r, C, n){
+  const wh = part(C.wheels) || part('c_wblack'), tt = C.ttype, rr = r * (tt === 'c_twhite' ? .52 : .6);
+  let s = wh.glow ? `<circle cx="${x}" cy="${cy}" r="${r + 5}" fill="${wh.glow}" opacity=".3"/>` : '';
+  if (tt === 'c_toff') s += Array.from({ length:16 }, (_, k) => `<rect x="${x - r * .14}" y="${cy - r - 3}" width="${r * .28}" height="7" rx="1.5" fill="#1a1c22" transform="rotate(${k * 22.5} ${x} ${cy})"/>`).join('');
+  s += `<circle cx="${x}" cy="${cy}" r="${r}" fill="url(#tire${n})"/>`;
+  if (tt === 'c_tstreet') s += `<circle cx="${x}" cy="${cy}" r="${r * .86}" fill="none" stroke="#3a3d47" stroke-width="1.2"/>`;
+  if (tt === 'c_tslick') s += `<path d="M${x - r * .62} ${cy - r * .5} A${r * .8} ${r * .8} 0 0 1 ${x + r * .62} ${cy - r * .5}" stroke="#ffd34d" stroke-width="${Math.max(1.5, r * .09)}" fill="none" stroke-dasharray="3 2"/>`;
+  if (tt === 'c_twhite') s += `<circle cx="${x}" cy="${cy}" r="${r * .7}" fill="#f4f4f0"/>`;
+  s += `<circle cx="${x}" cy="${cy}" r="${rr}" fill="${wh.hi}"/>`;
+  s += `<path d="M${x - rr * .55} ${cy - rr * .45} A${rr * .7} ${rr * .7} 0 0 1 ${x + rr * .2} ${cy - rr * .7}" stroke="#e5392f" stroke-width="${rr * .3}" fill="none"/>`; // brake caliper
+  const spoke = (k, cnt, w) => `<path d="M${x} ${cy} L${x} ${cy - rr * .92}" stroke="${wh.rim}" stroke-width="${w}" stroke-linecap="round" transform="rotate(${k * 360 / cnt} ${x} ${cy})"/>`;
+  if (wh.style === 'disc') s += `<circle cx="${x}" cy="${cy}" r="${rr * .92}" fill="${wh.rim}"/>` + Array.from({ length:6 }, (_, k) => {
+      const a = k * Math.PI / 3; return `<circle cx="${(x + Math.cos(a) * rr * .55).toFixed(1)}" cy="${(cy + Math.sin(a) * rr * .55).toFixed(1)}" r="${rr * .14}" fill="${wh.hi}"/>`; }).join('');
+  else if (wh.style === 'mesh') s += Array.from({ length:12 }, (_, k) => spoke(k, 12, rr * .12)).join('') + `<circle cx="${x}" cy="${cy}" r="${rr * .92}" fill="none" stroke="${wh.rim}" stroke-width="${rr * .14}"/>`;
+  else if (wh.style === 'star') s += `<path d="${Array.from({ length:10 }, (_, k) => { const a = k * Math.PI / 5 - Math.PI / 2, q = k % 2 ? rr * .4 : rr * .95;
+      return (k ? 'L' : 'M') + (x + Math.cos(a) * q).toFixed(1) + ' ' + (cy + Math.sin(a) * q).toFixed(1); }).join(' ')}Z" fill="${wh.rim}"/>`;
+  else { const cnt = +wh.style; s += Array.from({ length:cnt }, (_, k) => spoke(k, cnt, rr * .26)).join('') + `<circle cx="${x}" cy="${cy}" r="${rr * .92}" fill="none" stroke="${wh.rim}" stroke-width="${rr * .1}"/>`; }
+  s += `<circle cx="${x}" cy="${cy}" r="${rr * .2}" fill="${wh.rim}" stroke="${wh.hi}" stroke-width="1.2"/>`;
+  if (C.wheels === 'c_wfire') s += `<path d="M${x - r} ${cy + 2} Q${x - r - 18} ${cy - 4} ${x - r - 30} ${cy + 6} Q${x - r - 16} ${cy + 10} ${x - r} ${cy + 10}Z" fill="#ff8a3d" opacity=".85"/>`;
+  return s;
+}
+
+// Draws his car facing right. driver = show Ian in the seat.
 function carSVG(car, driver = true){
   const C = Object.assign({}, CAR_DEFAULT, car || S.car), n = ++svgN;
-  const body = (part(C.body) || part('c_racer')).id, pc = (part(C.paint) || part('c_red')).c, wh = part(C.wheels) || part('c_wblack');
-  const P = `url(#cp${n})`, glass = '#bfe6ff';
+  const B = CAR_SHAPES[C.body] || CAR_SHAPES.c_racer, pp = part(C.paint) || part('c_red'), pc = pp.c;
+  const r = (part(C.tsize) || part('c_tnorm')).r, lift = (r - 20) + B.lift, wy = 140 - r;
   const stops = arr => arr.map((c, k) => `<stop offset="${arr.length > 1 ? k / (arr.length - 1) : 0}" stop-color="${c}"/>`).join('');
-  const big = body === 'c_truck';
-  const W = big ? [[58, 112, 30], [182, 112, 30]] : body === 'c_buggy' ? [[56, 116, 24], [186, 116, 24]] : [[58, 120, 20], [186, 120, 20]];
-  const wheel = ([x, y, r]) => `${wh.glow ? `<circle cx="${x}" cy="${y}" r="${r + 4}" fill="${wh.glow}" opacity=".35"/>` : ''}
-    <circle cx="${x}" cy="${y}" r="${r}" fill="${wh.tire}"/>${big ? [0, 45, 90, 135, 180, 225, 270, 315].map(a => `<rect x="${x - 3}" y="${y - r - 2}" width="6" height="6" rx="1" fill="${wh.tire}" transform="rotate(${a} ${x} ${y})"/>`).join('') : ''}
-    <circle cx="${x}" cy="${y}" r="${r * .5}" fill="${wh.rim}"/>
-    ${wh.spokes ? [0, 60, 120].map(a => `<path d="M${x - r * .45} ${y} H${x + r * .45}" stroke="${wh.spokes}" stroke-width="2.5" transform="rotate(${a} ${x} ${y})"/>`).join('') : ''}
-    <circle cx="${x}" cy="${y}" r="${r * .16}" fill="${wh.tire}"/>
-    ${C.wheels === 'c_wfire' ? `<path d="M${x - r} ${y + 2} Q${x - r - 18} ${y - 4} ${x - r - 30} ${y + 6} Q${x - r - 16} ${y + 10} ${x - r} ${y + 10}Z" fill="#ff8a3d" opacity=".85"/>` : ''}`;
-  // the driver's head sits in the seat (drawn before the body so the body hides his neck)
-  const head = (x, y, w) => driver ? guideSVG(null, 'head').replace('<svg ', `<svg x="${x}" y="${y}" width="${w}" height="${w * 160 / 144}" `) : '';
-  const shapes = {
-    c_racer: { seat:[100, 4, 62],
-      body:`<path d="M10 112 Q8 92 30 88 L90 80 Q96 70 110 68 L156 68 Q166 70 170 80 L214 86 Q234 90 232 112 Q230 122 220 122 H22 Q12 122 10 112Z" fill="${P}"/>
-            <path d="M208 92 L232 100 L232 108 L210 106Z" fill="rgba(0,0,0,.18)"/><circle cx="222" cy="98" r="4" fill="#fff6a8"/>`, deco:[150, 100] },
-    c_sports: { seat:[100, 22, 54],
-      body:`<path d="M84 80 Q100 56 130 54 Q154 54 168 78Z" fill="${glass}" opacity=".35"/>
-            <path d="M80 82 Q98 52 130 50 Q160 50 174 80" fill="none" stroke="${P}" stroke-width="7" stroke-linejoin="round"/><path d="M146 52 L148 80" stroke="${P}" stroke-width="6"/>
-            <path d="M8 110 Q6 88 30 84 L80 80 L172 78 L216 82 Q236 88 234 110 Q232 122 220 122 H20 Q10 122 8 110Z" fill="${P}"/>
-            <circle cx="224" cy="96" r="4" fill="#fff6a8"/>`, deco:[150, 100] },
-    c_buggy: { seat:[90, 12, 60],
-      body:`<path d="M18 112 Q16 96 34 92 L210 90 Q228 92 226 108 Q224 118 214 118 H28 Q18 118 18 112Z" fill="${P}"/>
-            <path d="M70 92 L86 44 H158 L176 90" stroke="#3a3f4b" stroke-width="7" fill="none" stroke-linejoin="round"/><path d="M86 44 L84 92 M158 44 L160 90" stroke="#3a3f4b" stroke-width="5"/>
-            <circle cx="216" cy="100" r="4" fill="#fff6a8"/>`, deco:[130, 104] },
-    c_truck: { seat:[98, 12, 56],
-      body:`<rect x="30" y="92" width="182" height="14" rx="4" fill="#3a3f4b"/>
-            <path d="M88 68 Q94 42 114 40 L158 40 Q170 42 176 66Z" fill="${glass}" opacity=".35"/>
-            <path d="M84 68 Q90 38 112 36 L160 36 Q172 38 180 68" fill="none" stroke="${P}" stroke-width="7" stroke-linejoin="round"/>
-            <path d="M14 92 Q12 70 32 68 L214 68 Q232 70 232 92 Q230 98 222 98 H22 Q14 98 14 92Z" fill="${P}"/><circle cx="224" cy="80" r="5" fill="#fff6a8"/>`, deco:[70, 80] },
-    c_rocket: { seat:[88, 6, 58],
-      body:`<path d="M14 116 Q10 90 34 86 L80 82 Q92 66 116 66 L150 68 Q166 72 176 84 Q214 90 238 104 Q216 120 196 122 H24 Q14 122 14 116Z" fill="${P}"/>
-            <path d="M24 86 L8 56 L44 84Z M28 122 L6 136 L50 122Z" fill="${P}" stroke="rgba(0,0,0,.2)" stroke-width="2"/>
-            <circle cx="186" cy="100" r="9" fill="${glass}" stroke="#fff" stroke-width="3"/>`, deco:[140, 102] }
-  };
-  const S1 = shapes[body];
-  const [dx, dy] = S1.deco;
+  const P = `url(#cp${n})`, lc = (part(C.lights) || part('c_lwhite')).c;
+  const [fx, fy] = B.front, [rx, ry] = B.rear, [tx, ty] = B.roof, [dx, dy] = B.deco;
+  // driver
+  let head = '';
+  if (driver){
+    const [hx, hy, hw] = B.head;
+    const h = guideSVG(null, 'head').replace('<svg ', `<svg x="${hx}" y="${hy}" width="${hw}" height="${(hw * 160 / 144).toFixed(1)}" `);
+    head = B.open ? h : `<g clip-path="url(#cw${n})">${h}</g>`;
+  }
+  // stickers
   const deco = {
-    c_n5: `<circle cx="${dx}" cy="${dy}" r="14" fill="#fff"/><text x="${dx}" y="${dy + 7}" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="20" fill="#1d2233">5</text>`,
-    c_bolt: `<path d="M${dx + 6} ${dy - 16} L${dx - 10} ${dy + 2} H${dx} L${dx - 6} ${dy + 18} L${dx + 12} ${dy - 2} H${dx + 2}Z" fill="#ffd34d" stroke="#c98a00" stroke-width="1.5" stroke-linejoin="round"/>`,
-    c_stripes: `<path d="M16 ${big ? 78 : 100} H228" stroke="#fff" stroke-width="7"/><path d="M16 ${big ? 88 : 110} H228" stroke="#1d2233" stroke-width="4"/>`,
-    c_stars: [[dx - 22, dy - 4, 7], [dx, dy + 4, 9], [dx + 24, dy - 6, 6]].map(([x, y, r]) =>
-      `<path d="M${x} ${y - r} L${x + r * .3} ${y - r * .3} L${x + r} ${y} L${x + r * .3} ${y + r * .3} L${x} ${y + r} L${x - r * .3} ${y + r * .3} L${x - r} ${y} L${x - r * .3} ${y - r * .3}Z" fill="#fff"/>`).join(''),
-    c_flames: `<path d="M226 ${dy + 4} Q200 ${dy - 16} 176 ${dy - 6} Q186 ${dy - 2} 182 ${dy + 4} Q164 ${dy - 10} 146 ${dy} Q156 ${dy + 4} 150 ${dy + 10} Q190 ${dy + 18} 226 ${dy + 4}Z" fill="#ffb03b"/>
-      <path d="M222 ${dy + 5} Q200 ${dy - 6} 184 ${dy + 2} Q196 ${dy + 12} 222 ${dy + 5}Z" fill="#ffe066"/>`,
-    c_checks: `<g>${[0, 1].map(r => [0, 1, 2, 3, 4, 5].map(c => (r + c) % 2 ? '' : `<rect x="${dx - 24 + c * 8}" y="${dy - 8 + r * 8}" width="8" height="8" fill="#1d2233"/>`).join('')).join('')}</g>
+    c_n5: `<circle cx="${dx}" cy="${dy}" r="12" fill="#fff" stroke="#1d2233" stroke-width="1.5"/><text x="${dx}" y="${dy + 6}" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="17" fill="#1d2233">5</text>`,
+    c_bolt: `<path d="M${dx + 6} ${dy - 14} L${dx - 10} ${dy + 2} H${dx} L${dx - 6} ${dy + 15} L${dx + 12} ${dy - 2} H${dx + 2}Z" fill="#ffd34d" stroke="#c98a00" stroke-width="1.5" stroke-linejoin="round"/>`,
+    c_stripes: `<path d="M${rx} ${B.beltY + 6} L${fx - 4} ${B.beltY + 6}" stroke="#fff" stroke-width="6"/><path d="M${rx} ${B.beltY + 13} L${fx - 4} ${B.beltY + 13}" stroke="#1d2233" stroke-width="3"/>`,
+    c_stars: [[dx - 22, dy - 4, 6], [dx, dy + 3, 8], [dx + 22, dy - 6, 5]].map(([x, y, q]) =>
+      `<path d="M${x} ${y - q} L${x + q * .3} ${y - q * .3} L${x + q} ${y} L${x + q * .3} ${y + q * .3} L${x} ${y + q} L${x - q * .3} ${y + q * .3} L${x - q} ${y} L${x - q * .3} ${y - q * .3}Z" fill="#fff"/>`).join(''),
+    c_flames: `<path d="M${fx - 4} ${fy + 2} Q${fx - 30} ${fy - 16} ${fx - 56} ${fy - 6} Q${fx - 46} ${fy - 2} ${fx - 50} ${fy + 4} Q${fx - 70} ${fy - 10} ${fx - 92} ${fy} Q${fx - 80} ${fy + 4} ${fx - 86} ${fy + 10} Q${fx - 40} ${fy + 16} ${fx - 4} ${fy + 2}Z" fill="#ffb03b"/>
+      <path d="M${fx - 8} ${fy + 3} Q${fx - 30} ${fy - 6} ${fx - 48} ${fy + 2} Q${fx - 34} ${fy + 12} ${fx - 8} ${fy + 3}Z" fill="#ffe066"/>`,
+    c_checks: `<g>${[0, 1].map(q => [0, 1, 2, 3, 4, 5].map(c => (q + c) % 2 ? '' : `<rect x="${dx - 24 + c * 8}" y="${dy - 8 + q * 8}" width="8" height="8" fill="#1d2233"/>`).join('')).join('')}</g>
       <rect x="${dx - 24}" y="${dy - 8}" width="48" height="16" fill="none" stroke="#1d2233" stroke-width="1.5"/>`,
-    c_teeth: `<path d="M196 ${big ? 86 : 108} ${[0, 1, 2, 3].map(j => `L${200 + j * 8} ${big ? 96 : 118} L${204 + j * 8} ${big ? 86 : 108}`).join(' ')}Z" fill="#fff" stroke="#1d2233" stroke-width="1.2"/>
-      <circle cx="${big ? 196 : 200}" cy="${big ? 76 : 96}" r="6" fill="#fff"/><circle cx="${big ? 198 : 202}" cy="${big ? 76 : 96}" r="3" fill="#1d2233"/>`
+    c_teeth: `<path d="M${fx - 40} ${fy + 8} ${[0, 1, 2, 3].map(j => `L${fx - 36 + j * 8} ${fy + 16} L${fx - 32 + j * 8} ${fy + 8}`).join(' ')}Z" fill="#fff" stroke="#1d2233" stroke-width="1.2"/>`
   }[C.deco] || '';
-  const wingY = big ? 40 : 62;
-  const wing = {
-    c_wing1: `<path d="M24 ${wingY + 26} L30 ${wingY + 8}" stroke="#3a3f4b" stroke-width="5"/><rect x="6" y="${wingY}" width="44" height="9" rx="3" fill="${P}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>`,
-    c_wing2: `<path d="M20 ${wingY + 26} L24 ${wingY - 2} M40 ${wingY + 26} L42 ${wingY - 2}" stroke="#3a3f4b" stroke-width="5"/><rect x="0" y="${wingY - 12}" width="60" height="13" rx="4" fill="${P}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
-      <path d="M0 ${wingY - 12} V${wingY + 4} M60 ${wingY - 12} V${wingY + 4}" stroke="#1d2233" stroke-width="4"/>`
-  }[C.wing] || '';
-  const ty = big ? 82 : 104;
+  // wing on the back
+  const wingCol = (part(C.wing) || {}).c || P;
+  const wing = C.wing ? (() => {
+    const w = C.wing === 'c_wing2' ? 54 : 40, up = C.wing === 'c_wing2' ? 30 : 20;
+    return `<path d="M${rx + 6} ${ry} L${rx + 2} ${ry - up} M${rx + w - 14} ${ry} L${rx + w - 16} ${ry - up}" stroke="#2a2d36" stroke-width="4"/>
+      <path d="M${rx - 10} ${ry - up - 8} L${rx + w} ${ry - up - 10} L${rx + w + 2} ${ry - up - 2} L${rx - 10} ${ry - up + 2}Z" fill="${wingCol}" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/>
+      <path d="M${rx - 10} ${ry - up - 12} V${ry - up + 4}" stroke="#1d2233" stroke-width="4"/>`; })() : '';
+  // roof accessories
+  const roof = {
+    c_flag: `<path d="M${rx + 14} ${ry} L${rx + 10} ${ry - 50}" stroke="#2a2d36" stroke-width="2"/><g transform="translate(${rx + 10} ${ry - 50})">${[0, 1, 2].map(q => [0, 1, 2, 3].map(c =>
+      `<rect x="${c * 6}" y="${q * 6}" width="6" height="6" fill="${(q + c) % 2 ? '#fff' : '#1d2233'}"/>`).join('')).join('')}</g>`,
+    c_rbox: `<path d="M${tx - 30} ${ty - 2} V${ty - 6} M${tx + 30} ${ty - 2} V${ty - 6}" stroke="#2a2d36" stroke-width="3"/><path d="M${tx - 38} ${ty - 6} Q${tx - 36} ${ty - 22} ${tx - 10} ${ty - 22} H${tx + 26} Q${tx + 40} ${ty - 20} ${tx + 40} ${ty - 6}Z" fill="#3a3f4b"/><path d="M${tx - 26} ${ty - 17} H${tx + 24}" stroke="#6f7686" stroke-width="2"/>`,
+    c_rlights: `<rect x="${tx - 30}" y="${ty - 12}" width="60" height="10" rx="3" fill="#2a2d36"/>${[0, 1, 2, 3].map(k => `<circle cx="${tx - 22 + k * 14.7}" cy="${ty - 7}" r="4.2" fill="#ffe066" stroke="#c98a00"/>`).join('')}`,
+    c_siren: `<rect x="${tx - 26}" y="${ty - 12}" width="52" height="11" rx="4" fill="#2a2d36"/><rect x="${tx - 24}" y="${ty - 11}" width="22" height="9" rx="3" fill="#ff3b3b"/><rect x="${tx + 2}" y="${ty - 11}" width="22" height="9" rx="3" fill="#3b7bff"/>
+      <circle cx="${tx - 13}" cy="${ty - 8}" r="2.5" fill="#fff" opacity=".8"/><circle cx="${tx + 13}" cy="${ty - 8}" r="2.5" fill="#fff" opacity=".8"/>`
+  }[C.roof] || '';
+  // pipes and boosters
+  const ey = 108;
   const boost = {
-    c_exhaust: `<rect x="2" y="${ty}" width="14" height="8" rx="3" fill="#9aa3b5"/><path d="M2 ${ty - 2} Q-20 ${ty + 4} 2 ${ty + 10}Z" fill="#ff8a3d"/>`,
-    c_nitro: `<rect x="40" y="${ty - 30}" width="14" height="30" rx="6" fill="#4d8dff" stroke="#1f4fc0" stroke-width="2"/><rect x="56" y="${ty - 30}" width="14" height="30" rx="6" fill="#4d8dff" stroke="#1f4fc0" stroke-width="2"/>
-      <text x="55" y="${ty - 12}" text-anchor="middle" font-family="Arial" font-weight="700" font-size="9" fill="#fff">N</text>`,
-    c_booster: `<path d="M0 ${ty - 16} H30 V${ty + 8} H0Z" fill="#9aa3b5" stroke="#6f7686" stroke-width="2"/><path d="M0 ${ty - 14} Q-34 ${ty - 4} 0 ${ty + 6}Z" fill="#ff8a3d"/><path d="M0 ${ty - 10} Q-18 ${ty - 4} 0 ${ty + 2}Z" fill="#ffe066"/>`
+    c_twin: `<rect x="2" y="${ey}" width="16" height="5" rx="2.5" fill="#cfd5e0" stroke="#6f7686"/><rect x="2" y="${ey + 6}" width="16" height="5" rx="2.5" fill="#cfd5e0" stroke="#6f7686"/>`,
+    c_exhaust: `<rect x="2" y="${ey}" width="16" height="7" rx="3" fill="#9aa3b5"/><path d="M3 ${ey - 3} Q-22 ${ey + 3} 3 ${ey + 10}Z" fill="#ff8a3d"/><path d="M3 ${ey} Q-10 ${ey + 3} 3 ${ey + 7}Z" fill="#ffe066"/>`,
+    c_nitro: `<rect x="${rx + 6}" y="${ry - 26}" width="12" height="26" rx="5" fill="#4d8dff" stroke="#1f4fc0" stroke-width="2"/><rect x="${rx + 20}" y="${ry - 26}" width="12" height="26" rx="5" fill="#4d8dff" stroke="#1f4fc0" stroke-width="2"/>
+      <text x="${rx + 19}" y="${ry - 9}" text-anchor="middle" font-family="Arial" font-weight="700" font-size="8" fill="#fff">N</text>`,
+    c_booster: `<path d="M-2 ${ey - 16} H26 V${ey + 8} H-2Z" fill="#9aa3b5" stroke="#6f7686" stroke-width="2"/><path d="M-2 ${ey - 14} Q-36 ${ey - 4} -2 ${ey + 6}Z" fill="#ff8a3d"/><path d="M-2 ${ey - 10} Q-20 ${ey - 4} -2 ${ey + 2}Z" fill="#ffe066"/>`
   }[C.boost] || '';
-  const [hx, hy, hw] = S1.seat;
-  return `<svg viewBox="-34 ${big ? -4 : 6} 276 ${big ? 150 : 140}" aria-hidden="true">
-    <defs><linearGradient id="cp${n}" x1="0" y1="0" x2="${pc.length > 2 ? 1 : 0}" y2="1">${stops(pc)}</linearGradient></defs>
-    <ellipse cx="122" cy="${big ? 142 : 140}" rx="110" ry="5" fill="rgba(0,0,0,.18)"/>
-    ${wing}${head(hx, hy, hw)}${S1.body}${deco}${boost}${W.map(wheel).join('')}
+  // glow under the car
+  const gl = part(C.glow);
+  const glow = gl ? `<ellipse cx="${(B.wx[0] + B.wx[1]) / 2}" cy="${136}" rx="112" ry="9" fill="url(#gl${n})"/>` : '';
+  // suspension shows when the car sits up high
+  const shocks = lift > 3 ? B.wx.map(x => `<path d="M${x} ${wy} L${x} ${118 - lift}" stroke="#6f7686" stroke-width="5"/>
+      <path d="M${x - 5} ${wy - 4} ${Array.from({ length:Math.max(2, Math.floor((wy - 118 + lift) / 5)) }, (_, k) => `L${x + (k % 2 ? -5 : 5)} ${wy - 6 - k * 5}`).join(' ')}" stroke="#ffd34d" stroke-width="2.2" fill="none"/>`).join('') : '';
+  const frame = lift > 3 ? `<rect x="${B.wx[0] - 10}" y="${116 - lift}" width="${B.wx[1] - B.wx[0] + 20}" height="7" rx="3" fill="#2f333d"/>` : '';
+  const sv = Math.min(14, ty - lift - 26);
+  // car body (moved up when the tires are bigger)
+  const bodyG = `<g transform="translate(0 ${-lift})">
+      ${frame}${wing}${roof}
+      ${B.open ? head : ''}
+      ${B.fins ? `<path d="${B.fins}" fill="${P}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>` : ''}
+      ${B.wx.map(x => `<path d="M${x - B.arch} 118 A${B.arch} ${B.arch} 0 0 1 ${x + B.arch} 118Z" fill="#15171d"/>`).join('')}
+      <path d="${B.body}" fill="${P}" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/>
+      <path d="${B.body}" fill="url(#sh${n})"/>
+      ${B.win ? `<path d="${B.win}" fill="#1b2433"/>${head}<path d="${B.win}" fill="url(#gls${n})"/><path d="${B.win}" fill="none" stroke="#14161c" stroke-width="2.5"/>` : ''}
+      ${B.pillar ? `<path d="${B.pillar}" stroke="#14161c" stroke-width="4"/>` : ''}
+      ${B.door ? `<path d="${B.door}" stroke="rgba(0,0,0,.35)" stroke-width="1.4" fill="none"/>` : ''}
+      ${B.handle ? `<rect x="${B.handle[0]}" y="${B.handle[1]}" width="12" height="3" rx="1.5" fill="rgba(0,0,0,.4)"/>` : ''}
+      ${B.bed ? `<path d="M12 86 H104" stroke="rgba(0,0,0,.35)" stroke-width="2"/>` : ''}
+      ${B.cage ? `<path d="${B.cage}" stroke="#2f333d" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round"/>` : ''}
+      ${B.mirror ? `<path d="M${B.mirror[0]} ${B.mirror[1]} l8 -6 h6 l-2 8z" fill="${P}" stroke="rgba(0,0,0,.35)" stroke-width="1"/>` : ''}
+      <path d="M${rx + 8} ${B.beltY - 2} Q${(rx + fx) / 2} ${B.beltY - 8} ${fx - 20} ${B.beltY + 2}" stroke="#fff" stroke-width="3" opacity=".35" fill="none" stroke-linecap="round"/>
+      ${deco}
+      <path d="${B.light}" fill="${lc}" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+      <path d="M${fx} ${fy - 6} L${fx + 26} ${fy - 14} L${fx + 26} ${fy + 8}Z" fill="${lc}" opacity=".22"/>
+      <path d="${B.tail}" fill="#ff2a2a" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+      ${boost}
+    </g>`;
+  const vy = sv - 4, vh = 150 - vy;
+  return `<svg viewBox="-34 ${vy} 314 ${vh}" aria-hidden="true">
+    <defs>
+      <linearGradient id="cp${n}" x1="0" y1="0" x2="${pp.side ? 1 : 0}" y2="1">${stops(pc)}</linearGradient>
+      <linearGradient id="sh${n}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>
+      <linearGradient id="gls${n}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe6ff" stop-opacity=".3"/><stop offset=".45" stop-color="#bfe6ff" stop-opacity=".12"/><stop offset=".5" stop-color="#fff" stop-opacity=".45"/><stop offset=".58" stop-color="#bfe6ff" stop-opacity=".1"/><stop offset="1" stop-color="#bfe6ff" stop-opacity=".3"/></linearGradient>
+      <radialGradient id="tire${n}"><stop offset=".6" stop-color="#34373f"/><stop offset=".9" stop-color="#1c1e24"/><stop offset="1" stop-color="#111216"/></radialGradient>
+      ${gl ? `<radialGradient id="gl${n}">${gl.c === 'rainbow' ? stops(['#ff5a5a', '#ffd93d', '#5be37a', '#3fa6ff', '#b45cff']).replace(/stop-color/g, 'stop-opacity=".9" stop-color') : `<stop offset="0" stop-color="${gl.c}" stop-opacity=".95"/><stop offset="1" stop-color="${gl.c}" stop-opacity="0"/>`}</radialGradient>` : ''}
+      ${B.win ? `<clipPath id="cw${n}"><path d="${B.win}"/></clipPath>` : ''}
+    </defs>
+    <ellipse cx="${(B.wx[0] + B.wx[1]) / 2}" cy="141" rx="118" ry="5" fill="rgba(0,0,0,.22)"/>
+    ${glow}${shocks}${bodyG}
+    ${B.wx.map(x => wheelSVG(x, wy, r, C, n)).join('')}
   </svg>`;
+}
+// a single wheel, for the tire and rim buttons
+function wheelSwatch(look){
+  const C = Object.assign({}, S.car, look), n = ++svgN, r = (part(C.tsize) || part('c_tnorm')).r;
+  return `<svg viewBox="${-38 + 0} ${-38} 76 76"><defs><radialGradient id="tire${n}"><stop offset=".6" stop-color="#34373f"/><stop offset=".9" stop-color="#1c1e24"/><stop offset="1" stop-color="#111216"/></radialGradient></defs>
+    ${wheelSVG(0, 0, Math.min(r, 34), C, n)}</svg>`;
 }
 function partSwatch(p){
   if (p.slot === 'paint') return `<span class="sw" style="background:linear-gradient(135deg,${p.c.join(',')})"></span>`;
-  const look = Object.assign({}, S.car, { [p.slot]:p.id });
-  return `<span class="sw-car">${carSVG(look, false)}</span>`;
+  if (p.icon) return `<span class="sw-ico">${p.icon}</span>`;
+  if (['tsize', 'ttype', 'wheels'].includes(p.slot)) return `<span class="sw-wheel">${wheelSwatch({ [p.slot]:p.id })}</span>`;
+  return `<span class="sw-car">${carSVG(Object.assign({}, S.car, { [p.slot]:p.id }), false)}</span>`;
 }
-const GARAGE_TABS = [['body','🚗 Car'],['paint','🎨 Paint'],['deco','⚡ Stickers'],['wheels','🛞 Wheels'],['wing','🪽 Wing'],['boost','🔥 Boost']];
+// the horn he picked
+function honk(){
+  const h = S.car.horn;
+  if (h === 'c_htruck') return tone([150, 150, 150], .25, 'sawtooth');
+  if (h === 'c_hsilly') return tone([330, 660, 300, 600], .12, 'square');
+  if (h === 'c_hmusic') return tone([523, 659, 784, 1047, 784, 1047], .12, 'square');
+  tone([440], .12, 'square'); setTimeout(() => tone([440], .12, 'square'), 180);
+}
+const GARAGE_TABS = [['body','🚗 Car',['body']],['paint','🎨 Paint',['paint']],['deco','⚡ Stickers',['deco']],['tires','🛞 Tires',['tsize','ttype']],
+  ['wheels','💿 Rims',['wheels']],['lights','💡 Lights',['lights','glow']],['wing','🪽 Wing',['wing']],['roof','🚨 Roof',['roof']],['boost','🔥 Boost',['boost']],['horn','📯 Horn',['horn']]];
 function garageScreen(tab = 'body'){
   setTop(true, true);
-  const T = GARAGE_TABS.find(t => t[0] === tab) || GARAGE_TABS[0]; tab = T[0];
-  const list = CAR_PARTS.filter(p => p.slot === tab);
+  const T = GARAGE_TABS.find(t => t[0] === tab || t[2].includes(tab)) || GARAGE_TABS[0]; tab = T[0];
+  const list = CAR_PARTS.filter(p => T[2].includes(p.slot));
   screen.innerHTML = `<div class="closet">
     <div class="car-stage"><div class="car-big" id="carBig">${carSVG()}</div></div>
-    <button class="big-btn" id="drive">🏁 Drive!</button>
+    <div class="row"><button class="big-btn" id="drive">🏁 Drive!</button><button class="soft-btn" id="honk">📯 Honk!</button></div>
     <div class="tabs">${GARAGE_TABS.map(([k, l]) => `<button class="tab${k === tab ? ' on' : ''}" data-t="${k}">${l}</button>`).join('')}</div>
     <div class="items">${list.map(p => {
-      const own = S.owned.includes(p.id), on = S.car[p.slot] === p.id;
+      const own = S.owned.includes(p.id) || (!p.cost && !p.chest), on = S.car[p.slot] === p.id;
       const tag = on ? 'On ✓' : own ? 'Put on' : p.chest ? '🎁 In a chest' : '💎 ' + p.cost;
       return `<button class="item${on ? ' on' : ''}${own ? '' : ' locked-item'}${!own && p.chest ? ' chest-item' : ''}" data-id="${p.id}">
         ${partSwatch(p)}<b>${p.name}</b><small>${tag}</small></button>`;
@@ -2245,10 +2366,11 @@ function garageScreen(tab = 'body'){
     const c = $('#carBig'); c.classList.remove('zoom'); void c.offsetWidth; c.classList.add('zoom');
     sfx.vroom(); say('Ready, set, go! Vroom vroom!');
   };
+  $('#honk').onclick = () => honk();
   screen.querySelectorAll('.item').forEach(b => b.onclick = () => {
-    const p = part(b.dataset.id), own = S.owned.includes(p.id), on = S.car[p.slot] === p.id;
+    const p = part(b.dataset.id), own = S.owned.includes(p.id) || (!p.cost && !p.chest), on = S.car[p.slot] === p.id;
     if (own && on && CAR_OPTIONAL.includes(p.slot)){ S.car[p.slot] = null; save(); sfx.pop(); garageScreen(tab); }
-    else if (own){ S.car[p.slot] = p.id; save(); sfx.vroomShort(); garageScreen(tab); say(`Ooh, ${p.name}!`); }
+    else if (own){ S.car[p.slot] = p.id; save(); p.slot === 'horn' ? honk() : sfx.vroomShort(); garageScreen(tab); if (p.slot !== 'horn') say(`Ooh, ${p.name}!`); }
     else if (p.chest){
       b.classList.remove('wobble'); void b.offsetWidth; b.classList.add('wobble'); sfx.oops();
       say(`${p.name} is a secret treasure! You can only find it in a treasure chest!`);
