@@ -15065,6 +15065,296 @@
 "slow": false
 },
 {
+"k": "welcome to the pet vet!",
+"t": "Welcome to the Pet Vet!",
+"slow": false
+},
+{
+"k": "who needs help today?",
+"t": "Who needs help today?",
+"slow": false
+},
+{
+"k": "hmm, try a different tool!",
+"t": "Hmm, try a different tool!",
+"slow": false
+},
+{
+"k": "answer this to use the medicine!",
+"t": "Answer this to use the medicine!",
+"slow": false
+},
+{
+"k": "answer this to use the bandage!",
+"t": "Answer this to use the bandage!",
+"slow": false
+},
+{
+"k": "answer this to use the soap!",
+"t": "Answer this to use the soap!",
+"slow": false
+},
+{
+"k": "answer this to use the food!",
+"t": "Answer this to use the food!",
+"slow": false
+},
+{
+"k": "answer this to use the toy!",
+"t": "Answer this to use the toy!",
+"slow": false
+},
+{
+"k": "kitten doesn't feel well!",
+"t": "Kitten doesn't feel well!",
+"slow": false
+},
+{
+"k": "tap a tool to help!",
+"t": "Tap a tool to help!",
+"slow": false
+},
+{
+"k": "what else does kitten need?",
+"t": "What else does Kitten need?",
+"slow": false
+},
+{
+"k": "kitten is all better!",
+"t": "Kitten is all better!",
+"slow": false
+},
+{
+"k": "great job, doctor ian!",
+"t": "Great job, Doctor Ian!",
+"slow": false
+},
+{
+"k": "chick doesn't feel well!",
+"t": "Chick doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does chick need?",
+"t": "What else does Chick need?",
+"slow": false
+},
+{
+"k": "chick is all better!",
+"t": "Chick is all better!",
+"slow": false
+},
+{
+"k": "puppy doesn't feel well!",
+"t": "Puppy doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does puppy need?",
+"t": "What else does Puppy need?",
+"slow": false
+},
+{
+"k": "puppy is all better!",
+"t": "Puppy is all better!",
+"slow": false
+},
+{
+"k": "bunny doesn't feel well!",
+"t": "Bunny doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does bunny need?",
+"t": "What else does Bunny need?",
+"slow": false
+},
+{
+"k": "bunny is all better!",
+"t": "Bunny is all better!",
+"slow": false
+},
+{
+"k": "baby dino doesn't feel well!",
+"t": "Baby Dino doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does baby dino need?",
+"t": "What else does Baby Dino need?",
+"slow": false
+},
+{
+"k": "baby dino is all better!",
+"t": "Baby Dino is all better!",
+"slow": false
+},
+{
+"k": "panda doesn't feel well!",
+"t": "Panda doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does panda need?",
+"t": "What else does Panda need?",
+"slow": false
+},
+{
+"k": "panda is all better!",
+"t": "Panda is all better!",
+"slow": false
+},
+{
+"k": "dolphin doesn't feel well!",
+"t": "Dolphin doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does dolphin need?",
+"t": "What else does Dolphin need?",
+"slow": false
+},
+{
+"k": "dolphin is all better!",
+"t": "Dolphin is all better!",
+"slow": false
+},
+{
+"k": "fox doesn't feel well!",
+"t": "Fox doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does fox need?",
+"t": "What else does Fox need?",
+"slow": false
+},
+{
+"k": "fox is all better!",
+"t": "Fox is all better!",
+"slow": false
+},
+{
+"k": "little dragon doesn't feel well!",
+"t": "Little Dragon doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does little dragon need?",
+"t": "What else does Little Dragon need?",
+"slow": false
+},
+{
+"k": "little dragon is all better!",
+"t": "Little Dragon is all better!",
+"slow": false
+},
+{
+"k": "butterfly doesn't feel well!",
+"t": "Butterfly doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does butterfly need?",
+"t": "What else does Butterfly need?",
+"slow": false
+},
+{
+"k": "butterfly is all better!",
+"t": "Butterfly is all better!",
+"slow": false
+},
+{
+"k": "penguin doesn't feel well!",
+"t": "Penguin doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does penguin need?",
+"t": "What else does Penguin need?",
+"slow": false
+},
+{
+"k": "penguin is all better!",
+"t": "Penguin is all better!",
+"slow": false
+},
+{
+"k": "owl doesn't feel well!",
+"t": "Owl doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does owl need?",
+"t": "What else does Owl need?",
+"slow": false
+},
+{
+"k": "owl is all better!",
+"t": "Owl is all better!",
+"slow": false
+},
+{
+"k": "sea turtle doesn't feel well!",
+"t": "Sea Turtle doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does sea turtle need?",
+"t": "What else does Sea Turtle need?",
+"slow": false
+},
+{
+"k": "sea turtle is all better!",
+"t": "Sea Turtle is all better!",
+"slow": false
+},
+{
+"k": "lion cub doesn't feel well!",
+"t": "Lion Cub doesn't feel well!",
+"slow": false
+},
+{
+"k": "what else does lion cub need?",
+"t": "What else does Lion Cub need?",
+"slow": false
+},
+{
+"k": "lion cub is all better!",
+"t": "Lion Cub is all better!",
+"slow": false
+},
+{
+"k": "the fever is gone!",
+"t": "The fever is gone!",
+"slow": false
+},
+{
+"k": "all bandaged up!",
+"t": "All bandaged up!",
+"slow": false
+},
+{
+"k": "squeaky clean!",
+"t": "Squeaky clean!",
+"slow": false
+},
+{
+"k": "yum yum!",
+"t": "Yum yum!",
+"slow": false
+},
+{
+"k": "no more hungry tummy!",
+"t": "No more hungry tummy!",
+"slow": false
+},
+{
+"k": "happy again!",
+"t": "Happy again!",
+"slow": false
+},
+{
 "k": "ooh, bed!",
 "t": "Ooh, Bed!",
 "slow": false

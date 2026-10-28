@@ -246,6 +246,34 @@ h1.title{margin:0;font-size:clamp(2rem,9vw,3.4rem);line-height:1.05;
 .band.big span{width:clamp(66px,20vw,110px);height:auto;aspect-ratio:auto;display:flex;flex-direction:column;align-items:center;animation:bounce 1.6s ease-in-out infinite}
 .band.big small{color:#fff;font-weight:700;font-size:clamp(.85rem,3.6vw,1.05rem)}
 .band svg{width:100%;height:auto;display:block}
+/* pet vet */
+.vet-room{position:relative;width:100%;max-width:560px;height:clamp(160px,27dvh,240px);border-radius:24px;flex:none;overflow:hidden;margin:6px 0;
+  background:linear-gradient(#e6f4ff 0 70%,#cfd8e6 70%)}
+.vet-table{position:absolute;left:20%;right:20%;bottom:9%;height:9%;background:#b7c3d6;border-radius:10px;box-shadow:0 6px 0 #8f9ab0}
+.vet-pet{position:absolute;left:0;right:0;margin:auto;bottom:17%;width:clamp(120px,36vw,190px);transition:filter .5s}
+.vet-pet svg{width:100%;height:auto;display:block;transition:filter .5s}
+.vet-pet.fever svg{filter:sepia(.45) saturate(1.8) hue-rotate(-20deg)}
+.vet-pet.sad svg{filter:grayscale(.65)}
+.vet-pet.fever.sad svg{filter:grayscale(.4) sepia(.45) saturate(1.5)}
+.vet-pet .mud{position:absolute;width:17%;aspect-ratio:1.4;border-radius:50%;background:#7a4a24;opacity:.85}
+.vet-pet .cut{position:absolute;width:18%;height:4%;background:#e5392f;border-radius:4px;transform:rotate(-20deg)}
+.vet-pet .band{position:absolute;width:22%;height:10%;background:#f5c99a;border-radius:7px;transform:rotate(-20deg);box-shadow:inset 0 0 0 2px #d9a571}
+.vet-pet .band::after{content:'';position:absolute;left:35%;right:35%;top:22%;bottom:22%;background:#fff1e0;border-radius:3px}
+.vfx{position:absolute;font-size:clamp(1.4rem,6vw,2.2rem);font-weight:400;pointer-events:none}
+.vfx.therm{right:-8%;top:0}.vfx.think{left:-10%;top:-6%}.vfx.tear{left:64%;top:36%;font-size:clamp(.9rem,3.5vw,1.2rem)}
+.vfx.float{bottom:30%;animation:floatUp 1.8s ease-out forwards}
+@keyframes floatUp{to{transform:translateY(-140%);opacity:0}}
+.vet-chips{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;gap:4px;z-index:2}
+.vchip{background:#fff;border-radius:999px;padding:3px 10px;font-weight:600;font-size:clamp(.8rem,3.4vw,1rem);box-shadow:0 2px 0 #cdd9ef}
+.vchip.done{background:#8be0a0;text-decoration:line-through}
+.tools{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.tools[hidden],.qarea[hidden]{display:none}
+.tool{font:inherit;border:0;border-radius:18px;background:#fff;width:clamp(56px,16vw,86px);padding:8px 4px;box-shadow:0 5px 0 #cdd9ef;cursor:pointer;display:flex;flex-direction:column;align-items:center;color:var(--ink)}
+.tool:active{transform:translateY(3px);box-shadow:0 2px 0 #cdd9ef}
+.tool span{font-size:clamp(1.8rem,8vw,2.4rem);line-height:1.15}.tool small{font-weight:600;font-size:.8rem}
+.vet-happy{width:clamp(90px,26vw,140px)}.vet-happy svg{width:100%;height:auto;display:block}
+.vet-note{font-size:1rem;margin-top:12px}
+.place.vet-tile{grid-column:1/-1;background:linear-gradient(160deg,#fff,#e8f4ff);outline:4px solid #bcd4ff}
 /* garage */
 .car-stage{width:100%;max-width:560px;overflow:hidden;border-radius:24px;padding:6px 0;
   background:repeating-linear-gradient(90deg,rgba(255,255,255,.7) 0 26px,transparent 26px 54px) 0 88%/100% 4px no-repeat,linear-gradient(#4a4f5c,#2b2e37)}
@@ -1418,12 +1446,14 @@ function mapScreen(){
       <button class="place open" id="carTile"><span class="ico">🏎️</span><b>My Race Car</b><small>Build & paint it</small></button>
       <button class="place open adventure" id="advTile"><span class="ico">🗺️</span><b>Adventure</b><small>${storyTileText()}</small></button>
       <button class="place open pets-tile" id="petsTile"><span class="ico">🐾</span><b>Pet Friends</b><small>${(S.pets || []).length} of ${PETS.length} found</small></button>
+      <button class="place open vet-tile" id="vetTile"><span class="ico">🏥</span><b>Pet Vet</b><small>Help sick animals feel better</small></button>
     </div>`;
   $('#petsTile').onclick = () => { sfx.pop(); petsScreen(); say(pet() ? 'Here are your pet friends!' : 'Reach a goal to earn a pet friend! Here are the goals.'); };
   checkPets();
   $('#tower').onclick = () => { sfx.pop(); balloonGame(); };
   $('#garden').onclick = () => { sfx.pop(); gardenScreen(); say('Welcome to the Number Garage! Pick a game!'); };
   $('#advTile').onclick = () => { sfx.pop(); worldScreen(); };
+  $('#vetTile').onclick = () => { sfx.pop(); vetScreen(); say('Welcome to the Pet Vet! Who needs help today?'); };
   $('#carTile').onclick = () => { sfx.vroomShort(); garageScreen(); say('Welcome to your garage! Make your race car awesome!'); };
   $('#closetTile').onclick = () => { sfx.pop(); closetScreen('hairStyle'); say('Welcome to the style shop! Pick something to wear!'); };
   bindLocked();
@@ -2495,6 +2525,117 @@ function garageScreen(tab = 'body'){
   });
 }
 
+/* ================= PET VET (Doctor Ian fixes up animals) ================= */
+const VET_VISITORS = ['kitten', 'puppy', 'bunny'];          // clinic animals he can treat before he owns any pets
+const VET_PROBLEMS = {
+  fever:  { chip:'🤒 Fever',    tool:'medicine', fixed:'The fever is gone!' },
+  cut:    { chip:'🩹 Boo-boo',  tool:'bandage',  fixed:'All bandaged up!' },
+  muddy:  { chip:'🟤 Muddy',    tool:'soap',     fixed:'Squeaky clean!' },
+  hungry: { chip:'🍽️ Hungry',   tool:'food',     fixed:'Yum yum! No more hungry tummy!' },
+  sad:    { chip:'😢 Sad',      tool:'toy',      fixed:'Yay! Happy again!' }
+};
+const VET_TOOLS = [['medicine','💊','Medicine'], ['bandage','🩹','Bandage'], ['soap','🧼','Soap'], ['food','🍖','Food'], ['toy','🧸','Toy']];
+const vetPatients = () => [...new Set([...(S.pets || []), ...VET_VISITORS])].map(id => PETS.find(p => p.id === id)).filter(Boolean);
+
+function vetScreen(){
+  setTop(true, true);
+  const mine = S.pets || [];
+  screen.innerHTML = `<div class="closet">
+    <div class="guide"><div class="uni sm">${guideSVG()}</div><div class="bubble">Welcome to the Pet Vet! 🏥<br>Who needs help today?</div></div>
+    <div class="items">${vetPatients().map(p => `<button class="item vet-pick" data-id="${p.id}">
+      <span class="pet-ico">${petSVG(p.id)}</span><b>${esc(p.name)}</b><small>${mine.includes(p.id) ? '⭐ Your pet' : 'Visitor'}</small></button>`).join('')}</div>
+    <div class="bubble vet-note">Earn more pets in Pet Friends, and they can visit too!</div>
+  </div>`;
+  screen.querySelectorAll('.vet-pick').forEach(b => b.onclick = () => { sfx.pop(); vetVisit(b.dataset.id); });
+}
+
+function vetVisit(id){
+  setTop(true, true);
+  const p = PETS.find(x => x.id === id) || PETS[0], my = nav;
+  const probs = shuffle(Object.keys(VET_PROBLEMS)).slice(0, 3), fixed = new Set();
+  let earned = 0, busy = false;
+  screen.innerHTML = `
+    <div class="game-head">
+      <div class="uni xs">${guideSVG()}</div>
+      <div class="bubble" id="prompt"></div>
+      <button class="icon-btn" id="hear" aria-label="Hear it again">🔊</button>
+    </div>
+    <div class="vet-room">
+      <div class="vet-table"></div>
+      <div class="vet-pet${probs.includes('fever') ? ' fever' : ''}${probs.includes('sad') ? ' sad' : ''}" id="vp">${petSVG(p.id)}
+        ${probs.includes('muddy') ? '<i class="mud" style="left:28%;top:52%"></i><i class="mud" style="left:52%;top:62%"></i><i class="mud" style="left:68%;top:30%"></i>' : ''}
+        ${probs.includes('cut') ? '<i class="cut" style="left:38%;top:58%"></i>' : ''}
+        ${probs.includes('fever') ? '<b class="vfx therm">🌡️</b>' : ''}
+        ${probs.includes('hungry') ? '<b class="vfx think">🍖</b>' : ''}
+        ${probs.includes('sad') ? '<b class="vfx tear">💧</b>' : ''}
+      </div>
+      <div class="vet-chips" id="chips">${probs.map(k => `<span class="vchip" data-k="${k}">${VET_PROBLEMS[k].chip}</span>`).join('')}</div>
+    </div>
+    <div class="tools" id="tools">${VET_TOOLS.map(([k, e, n]) => `<button class="tool" data-t="${k}"><span>${e}</span><small>${n}</small></button>`).join('')}</div>
+    <div class="qarea" id="qa" hidden></div>`;
+  const qa = $('#qa'), tools = $('#tools'), prompt = $('#prompt'), vp = $('#vp');
+  let speakIt = null;
+  $('#hear').onclick = () => speakIt && speakIt();
+  const setPrompt = (t, spoken) => { prompt.textContent = t; speakIt = () => say(spoken || t); return speakIt(); };
+  const ctx = { my, qa, setPrompt, gem: () => { earned += lucky(); } };
+  setPrompt(`${p.name} doesn't feel well! Tap a tool to help!`);
+
+  tools.querySelectorAll('.tool').forEach(b => b.onclick = () => {
+    if (busy) return;
+    const k = probs.find(x => !fixed.has(x) && VET_PROBLEMS[x].tool === b.dataset.t);
+    if (!k){
+      b.classList.remove('wobble'); void b.offsetWidth; b.classList.add('wobble'); sfx.oops();
+      return setPrompt('Hmm, try a different tool!');
+    }
+    busy = true; sfx.pop();
+    tools.hidden = true; qa.hidden = false;
+    const kind = pick(['word', 'math', 'count', 'word', 'shape', 'math']);
+    setPrompt(`Answer this to use the ${b.dataset.t}!`).then(() => {
+      if (my !== nav) return;
+      CHALLENGES[kind](ctx, () => {
+        if (my !== nav) return;
+        qa.hidden = true; qa.innerHTML = ''; tools.hidden = false; busy = false;
+        fix(k);
+      });
+    });
+  });
+
+  function fix(k){
+    fixed.add(k);
+    screen.querySelector(`.vchip[data-k="${k}"]`).classList.add('done');
+    const pop = (e, n = 5) => { for (let j = 0; j < n; j++){ const s = document.createElement('b'); s.className = 'vfx float'; s.textContent = e;
+      s.style.left = (20 + Math.random() * 60) + '%'; s.style.animationDelay = (j * .12) + 's'; vp.appendChild(s); setTimeout(() => s.remove(), 2000); } };
+    if (k === 'muddy'){ vp.querySelectorAll('.mud').forEach(m => m.remove()); pop('🫧', 7); }
+    if (k === 'cut'){ const c = vp.querySelector('.cut'); c.className = 'band'; }
+    if (k === 'fever'){ vp.classList.remove('fever'); const t = vp.querySelector('.therm'); if (t) t.remove(); pop('✨', 4); }
+    if (k === 'hungry'){ const t = vp.querySelector('.think'); if (t) t.remove(); pop('😋', 3); }
+    if (k === 'sad'){ vp.classList.remove('sad'); const t = vp.querySelector('.tear'); if (t) t.remove(); pop('💖', 5); }
+    vp.classList.remove('hop'); void vp.offsetWidth; vp.classList.add('hop');
+    sfx.chime();
+    const msg = VET_PROBLEMS[k].fixed;
+    if (fixed.size < probs.length) setPrompt(msg + ' What else does ' + p.name + ' need?', `${msg} What else does ${p.name} need?`);
+    else { say(msg); setTimeout(() => my === nav && done(), 1600); }
+  }
+  function done(){
+    const bonus = 3; addGems(bonus); earned += bonus;
+    S.vetVisits = (S.vetVisits || 0) + 1;
+    S.where = ['vetScreen'];
+    logGame(); save();
+    setTop(true, true);
+    sfx.tada(); sfx.cheer(); confetti(60);
+    screen.innerHTML = `<div class="center">
+      <div class="chest-row"><div class="uni full bounce">${guideSVG(null, 'full')}</div><div class="vet-happy bounce">${petSVG(p.id)}</div></div>
+      <div class="bubble">${esc(p.name)} is all better! 🎉<br>You earned <b>${earned}</b> 💎</div>
+      <div class="chest-box" id="chestSpot"></div>
+      <div class="row"><button class="big-btn" id="next">🏥 Next patient</button><button class="soft-btn" id="toMap">🏠 Home</button></div>
+    </div>`;
+    offerChest(.25, say(`${p.name} is all better! Great job, Doctor Ian! You earned ${earned} gems!`));
+    checkPets();
+    $('#next').onclick = () => { sfx.pop(); vetScreen(); };
+    $('#toMap').onclick = () => mapScreen();
+  }
+}
+
 /* ================= HIS ROOM ================= */
 // Room coordinates are % of the room box: x = center, y = bottom of the item. Sizes are % of room width.
 const FURN = [
@@ -3273,7 +3414,7 @@ if (!S.look){ // first start: dress him as himself
 // Each screen saves its name; if the phone reloads the app, "Keep playing" brings her back there.
 if (!S.played && S.rounds) S.played = S.rounds; // count games played before this update
 const RESUME = ['mapScreen','gardenScreen','closetScreen','worldScreen','chapterMap','storyLevel',
-  'balloonGame','mathGame','countGame','shapeGame','clockGame','coinGame','petsScreen','houseScreen','garageScreen'];
+  'balloonGame','mathGame','countGame','shapeGame','clockGame','coinGame','petsScreen','houseScreen','garageScreen','vetScreen','vetVisit'];
 const SCREENS = {};
 RESUME.forEach(name => {
   const orig = window[name]; SCREENS[name] = orig;
@@ -3283,7 +3424,7 @@ RESUME.forEach(name => {
 mapScreen = window.mapScreen; gardenScreen = window.gardenScreen; closetScreen = window.closetScreen;
 worldScreen = window.worldScreen; chapterMap = window.chapterMap; storyLevel = window.storyLevel;
 balloonGame = window.balloonGame; mathGame = window.mathGame; countGame = window.countGame;
-shapeGame = window.shapeGame; clockGame = window.clockGame; coinGame = window.coinGame; petsScreen = window.petsScreen; houseScreen = window.houseScreen; garageScreen = window.garageScreen;
+shapeGame = window.shapeGame; clockGame = window.clockGame; coinGame = window.coinGame; petsScreen = window.petsScreen; houseScreen = window.houseScreen; garageScreen = window.garageScreen; vetScreen = window.vetScreen; vetVisit = window.vetVisit;
 const _parent = parentScreen; parentScreen = (...a) => { S.where = ['parentScreen']; save(); return _parent(...a); };
 const _gate = parentGate; parentGate = (...a) => { S.where = ['parentScreen']; save(); return _gate(...a); };
 const _rescue = rescueScene; rescueScene = (...a) => { S.where = ['worldScreen']; save(); return _rescue(...a); };
@@ -3304,6 +3445,7 @@ function backTarget(){
   if (['mathGame','countGame','shapeGame','clockGame','coinGame'].includes(w)) return () => gardenScreen();
   if (w === 'storyLevel') return () => chapterMap(S.where[1]);
   if (w === 'chapterMap') return () => worldScreen();
+  if (w === 'vetVisit') return () => vetScreen();
   if (w === 'mapScreen') return null;
   return () => mapScreen();
 }
